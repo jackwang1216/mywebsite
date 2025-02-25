@@ -1,25 +1,35 @@
-// app/blog/[slug]/page.tsx
 
-import { getPostBySlug } from "@/lib/posts";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import type { Metadata } from "next";
 
-type Params = { slug: string };
+import { getPost } from '@/lib/posts'
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import ReactMarkdown from 'react-markdown'
+import type { Metadata } from 'next'
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
-  return {
-    title: post?.title ?? "Post Not Found",
-  };
+interface Props {
+  params: { slug: string }
 }
 
-export default async function Page({ params }: { params: Params }) {
-  const post = await getPostBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = getPost(params.slug)
 
   if (!post) {
-    notFound();
+    return {
+      title: 'Post Not Found | Jack Wang',
+    }
+  }
+
+  return {
+    title: `${post.title} | Jack Wang`,
+    description: post.excerpt,
+  }
+}
+
+export default function BlogPostPage({ params }: Props) {
+  const post = getPost(params.slug)
+
+  if (!post) {
+    notFound()
   }
 
   return (
@@ -56,5 +66,5 @@ export default async function Page({ params }: { params: Params }) {
         </article>
       </div>
     </div>
-  );
+  )
 }

@@ -1,3 +1,5 @@
+import { cache } from 'react';
+
 export interface Post {
   slug: string;
   title: string;
@@ -29,17 +31,10 @@ Stay tuned for more content coming soon!
   },
 ];
 
-export function getAllPosts(): Post[] {
-  return posts.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-}
+export const getPosts = cache(() => {
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+});
 
-export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const post = posts.find(p => p.slug === slug);
-  return post || null;
-}
+export const getPost = cache((slug: string) => {
+  return posts.find((post) => post.slug === slug) ?? null;
+});

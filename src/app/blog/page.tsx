@@ -1,8 +1,14 @@
-import { getAllPosts } from '@/lib/posts';
-import Link from 'next/link';
+import { getPosts } from '@/lib/posts'
+import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Blog | Jack Wang',
+  description: 'Personal blog about software engineering, mathematics, and athletics',
+}
 
 export default function BlogPage() {
-  const posts = getAllPosts();
+  const posts = getPosts()
 
   return (
     <div className="min-h-screen py-20">
@@ -49,5 +55,5 @@ export default function BlogPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
