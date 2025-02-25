@@ -34,6 +34,7 @@ const Contact = () => {
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('Failed to send message:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -51,7 +52,7 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h2 className="text-5xl font-serif font-bold text-cream mb-4">Get in Touch</h2>
-          <p className="text-xl text-cream/80 font-serif">Let&apos;s connect and create something amazing together</p>
+          <p className="text-xl text-cream/80 font-serif">Let&#39;s connect and create something amazing together</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -65,8 +66,8 @@ const Contact = () => {
             <h3 className="text-3xl font-serif text-gold">Contact Information</h3>
             <div className="space-y-4">
               <p className="text-cream/80">
-                I&apos;m always open to new opportunities and collaborations. Whether you have a question
-                or just want to say hi, I will get back to you!
+                I&#39;m always open to new opportunities and collaborations. Whether you have a question
+                or just want to say hi, I&#39;ll get back to you!
               </p>
               <div className="flex items-center space-x-3 text-cream/80">
                 <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
