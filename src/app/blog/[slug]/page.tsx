@@ -5,15 +5,11 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import type { Metadata } from "next";
 
-interface PageProps {
+export async function generateMetadata({
+  params,
+}: {
   params: { slug: string };
-}
-
-interface SearchParams {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+}): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) {
     return {
@@ -28,7 +24,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogPost({
   params,
   searchParams,
-}: PageProps & SearchParams) {
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
