@@ -2,12 +2,29 @@ import { getPostBySlug } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import type { Metadata } from 'next';
+
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = await getPostBySlug(params.slug);
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+  return {
+    title: post.title,
+  };
+}
 
 export default async function BlogPost({
   params,
-}: {
-  params: { slug: string }
-}) {
+  searchParams,
+}: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
