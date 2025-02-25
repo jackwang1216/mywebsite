@@ -37,7 +37,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Simplify.ai(Not done yet)",
+    title: "Simplify.ai(Almost done, need to UI work and few more functions)",
     description:
       "AI tool that helps illiterate, non-native speaking, and other disabled people",
     technologies: ["React", "Python", "OpenAI"],
