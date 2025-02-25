@@ -60,7 +60,7 @@ const About: React.FC = () => {
               <p className="text-cream/80">
                 I&#39;m a tri-lingual undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
                 quantitative research, and athletics. When I&#39;m not coding or solving mathematical problems,
-                you can find me sprinting, lifting, playing soccer, and playing chess.
+                you can find me sprinting, lifting, playing soccer, or playing chess.
               </p>
             </div>
 
