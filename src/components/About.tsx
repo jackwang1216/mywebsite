@@ -28,7 +28,7 @@ const About: React.FC = () => {
     {
       title: "Software Engineer Intern",
       company: "Forza",
-      description: "Improved their work environment website to improve productivity",
+      description: "Improved their work environment website to improve productivity. Currently working on their new website",
     },
   ];
 
@@ -60,7 +60,7 @@ const About: React.FC = () => {
               <p className="text-cream/80">
                 I&#39;m an undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
                 quantitative research, and athletics. When I&#39;m not coding or solving mathematical problems,
-                you can find me sprinting, lifting, playing soccer, and playing chess. 
+                you can find me sprinting, lifting, playing soccer, and playing chess.
               </p>
             </div>
 
