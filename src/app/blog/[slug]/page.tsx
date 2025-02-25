@@ -3,13 +3,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
-
-export default async function BlogPost({ params }: Props) {
+export default async function BlogPost({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
