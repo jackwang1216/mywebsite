@@ -1,44 +1,21 @@
 // app/blog/[slug]/page.tsx
 
-import type { Metadata } from "next";
+import { getPostBySlug } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import { getPostBySlug } from "@/lib/posts";
+import type { Metadata } from "next";
 
-// Define the shape of the route's props:
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-  // If you're not using query parameters, you can leave this
-  // out entirely. If you might use them later, rename to _searchParams:
-  searchParams: {
-    [key: string]: string | string[] | undefined;
-  };
-}
+type Params = { slug: string };
 
-// 1) This function sets <title> and such based on the post
-export async function generateMetadata({
-  params,
-}: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
-  if (!post) {
-    return {
-      title: "Post Not Found",
-    };
-  }
   return {
-    title: post.title,
+    title: post?.title ?? "Post Not Found",
   };
 }
 
-// 2) The actual page component
-export default async function BlogPostPage({
-  params,
-  // Rename to _searchParams to avoid ESLint "unused" error if not used:
-  searchParams: _searchParams,
-}: BlogPostPageProps) {
+export default async function Page({ params }: { params: Params }) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -75,9 +52,7 @@ export default async function BlogPostPage({
           <div className="mb-8">
             <time className="text-gold/80">{post.date}</time>
           </div>
-          <div className="text-cream/80">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
-          </div>
+          <ReactMarkdown>{post.content}</ReactMarkdown>
         </article>
       </div>
     </div>
