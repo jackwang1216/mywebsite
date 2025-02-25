@@ -6,7 +6,6 @@ import type { Metadata } from 'next';
 
 type Props = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,10 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPost({
-  params,
-  searchParams,
-}: Props) {
+export default async function BlogPost({ params }: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
