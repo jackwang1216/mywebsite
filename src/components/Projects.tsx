@@ -45,7 +45,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Forza...(Coming soon)",
+    title: "Forza New Website...(Coming soon)",
     description: "",
     technologies: [],
     link: "#",
