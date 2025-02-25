@@ -3,10 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/posts';
+import { getPosts } from '@/lib/posts';
 
 const BlogPreview = () => {
-  const posts = getAllPosts().slice(0, 3); // Show only the latest 3 posts
+  const posts = getPosts().slice(0, 3); // Show only the latest 3 posts
 
   return (
     <section className="py-20">
