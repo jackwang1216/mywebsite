@@ -1,35 +1,40 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { getPostBySlug } from "@/lib/posts";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import type { Metadata } from "next";
+import { getPostBySlug } from "@/lib/posts";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
-  if (!post) {
-    return {
-      title: "Post Not Found",
-    };
-  }
-  return {
-    title: post.title,
+/**
+ * Define your route’s props shape:
+ * - params will contain dynamic route segments
+ * - searchParams will contain any query string (?foo=bar)
+ */
+interface BlogPostPageProps {
+  params: {
+    slug: string;
+  };
+  searchParams: {
+    [key: string]: string | string[] | undefined;
   };
 }
 
-export default async function BlogPost({
+// 1) generateMetadata if you want dynamic <title>, etc.
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const post = await getPostBySlug(params.slug);
+  if (!post) {
+    return { title: "Post Not Found" };
+  }
+  return { title: post.title };
+}
+
+// 2) Your actual page component
+export default async function BlogPostPage({
   params,
   searchParams,
-}: {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+}: BlogPostPageProps) {
   const post = await getPostBySlug(params.slug);
-
   if (!post) {
     notFound();
   }

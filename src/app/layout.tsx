@@ -11,7 +11,6 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Jack Wang",
   description: "Software Engineer & Developer & Researcher & Athlete",
-  icons: [],
   appleWebApp: {
     capable: false,
     statusBarStyle: "default",
