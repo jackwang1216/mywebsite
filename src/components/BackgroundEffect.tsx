@@ -29,28 +29,27 @@ export default function BackgroundEffect() {
       size: number;
       color: string;
 
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+      constructor(width: number, height: number) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
         this.vx = (Math.random() - 0.5) * 0.3;
         this.vy = (Math.random() - 0.5) * 0.3;
         this.size = Math.random() * 1.5;
         this.color = `rgba(255, 215, 0, ${Math.random() * 0.3})`; // Gold color with random opacity
       }
 
-      update() {
+      update(width: number, height: number) {
         this.x += this.vx;
         this.y += this.vy;
 
         // Wrap around screen
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
       }
 
-      draw() {
-        if (!ctx) return;
+      draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
@@ -61,12 +60,12 @@ export default function BackgroundEffect() {
     // Create particles
     const particles: Particle[] = [];
     for (let i = 0; i < 150; i++) {
-      particles.push(new Particle());
+      particles.push(new Particle(canvas.width, canvas.height));
     }
 
     // Animation loop
     function animate() {
-      if (!ctx) return;
+      if (!ctx || !canvas) return;
       
       // Clear canvas with dark background
       ctx.fillStyle = 'rgba(17, 17, 17, 1)';
@@ -88,8 +87,8 @@ export default function BackgroundEffect() {
 
       // Update and draw particles
       particles.forEach(particle => {
-        particle.update();
-        particle.draw();
+        particle.update(canvas.width, canvas.height);
+        particle.draw(ctx);
       });
 
       // Draw connections

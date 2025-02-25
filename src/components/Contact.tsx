@@ -1,17 +1,53 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          to: 'thejackwang1216@gmail.com',
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to send message');
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
           <h2 className="text-5xl font-serif font-bold text-cream mb-4">Get in Touch</h2>
@@ -36,8 +72,8 @@ const Contact = () => {
                 <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <a href="mailto:jackwang1216@gmail.com" className="hover:text-gold transition-colors">
-                  jw1216@mit.edu
+                <a href="mailto:thejackwang1216@gmail.com" className="hover:text-gold transition-colors">
+                  thejackwang1216@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-3 text-cream/80">
@@ -80,40 +116,59 @@ const Contact = () => {
             viewport={{ once: true }}
             className="bg-dark-accent p-8 rounded-lg border border-cream/10"
           >
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-cream/80 mb-2">Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-cream/80">
+                  Name
+                </label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-2 bg-dark border border-cream/10 rounded-lg text-cream/80 focus:outline-none focus:border-gold/50"
-                  placeholder="Your name"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="mt-1 block w-full rounded-md bg-dark-accent border border-gold/20 text-cream shadow-sm focus:border-gold focus:ring focus:ring-gold/20"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-cream/80 mb-2">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-cream/80">
+                  Email
+                </label>
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-2 bg-dark border border-cream/10 rounded-lg text-cream/80 focus:outline-none focus:border-gold/50"
-                  placeholder="your@email.com"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="mt-1 block w-full rounded-md bg-dark-accent border border-gold/20 text-cream shadow-sm focus:border-gold focus:ring focus:ring-gold/20"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-cream/80 mb-2">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-cream/80">
+                  Message
+                </label>
                 <textarea
                   id="message"
+                  required
                   rows={4}
-                  className="w-full px-4 py-2 bg-dark border border-cream/10 rounded-lg text-cream/80 focus:outline-none focus:border-gold/50"
-                  placeholder="Your message"
-                ></textarea>
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="mt-1 block w-full rounded-md bg-dark-accent border border-gold/20 text-cream shadow-sm focus:border-gold focus:ring focus:ring-gold/20"
+                />
               </div>
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-dark text-gold border border-gold/20 rounded-lg hover:bg-gold/10 transition-colors duration-300"
+                disabled={isSubmitting}
+                className="w-full px-4 py-2 bg-dark-accent text-gold border border-gold/20 rounded-md hover:bg-gold/10 focus:outline-none focus:ring-2 focus:ring-gold/20 transition-colors disabled:opacity-50"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
+              {submitStatus === 'success' && (
+                <p className="text-green-500">Message sent successfully!</p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-500">Failed to send message. Please try again.</p>
+              )}
             </form>
           </motion.div>
         </div>
