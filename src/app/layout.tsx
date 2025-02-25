@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import BackgroundEffect from "@/components/BackgroundEffect";
@@ -11,6 +11,17 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Jack Wang",
   description: "Software Engineer & Developer & Researcher & Athlete",
+  icons: [],
+  appleWebApp: {
+    capable: false,
+    statusBarStyle: "default",
+    title: "Jack Wang"
+  },
+  applicationName: "Jack Wang"
+};
+
+export const viewport: Viewport = {
+  themeColor: 'black',
 };
 
 export default function RootLayout({
