@@ -1,40 +1,46 @@
+// app/blog/[slug]/page.tsx
+
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { getPostBySlug } from "@/lib/posts";
 
-/**
- * Define your route’s props shape:
- * - params will contain dynamic route segments
- * - searchParams will contain any query string (?foo=bar)
- */
+// Define the shape of the route's props:
 interface BlogPostPageProps {
   params: {
     slug: string;
   };
+  // If you're not using query parameters, you can leave this
+  // out entirely. If you might use them later, rename to _searchParams:
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
 }
 
-// 1) generateMetadata if you want dynamic <title>, etc.
+// 1) This function sets <title> and such based on the post
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) {
-    return { title: "Post Not Found" };
+    return {
+      title: "Post Not Found",
+    };
   }
-  return { title: post.title };
+  return {
+    title: post.title,
+  };
 }
 
-// 2) Your actual page component
+// 2) The actual page component
 export default async function BlogPostPage({
   params,
-  searchParams,
+  // Rename to _searchParams to avoid ESLint "unused" error if not used:
+  searchParams: _searchParams,
 }: BlogPostPageProps) {
   const post = await getPostBySlug(params.slug);
+
   if (!post) {
     notFound();
   }
