@@ -35,7 +35,7 @@ export default function BackgroundEffect() {
         this.vx = (Math.random() - 0.5) * 0.3;
         this.vy = (Math.random() - 0.5) * 0.3;
         this.size = Math.random() * 1.5;
-        this.color = `rgba(255, 215, 0, ${Math.random() * 0.3})`; // Gold color with random opacity
+        this.color = `rgba(255, 215, 0, ${Math.random() * 0.4 + 0.1})`; // Increased base opacity
       }
 
       update(width: number, height: number) {
@@ -59,7 +59,7 @@ export default function BackgroundEffect() {
 
     // Create particles
     const particles: Particle[] = [];
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 180; i++) { // Increased number of particles
       particles.push(new Particle(canvas.width, canvas.height));
     }
 
@@ -98,12 +98,13 @@ export default function BackgroundEffect() {
           const dy = particle.y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
+          if (distance < 180) { // Increased connection distance
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 215, 0, ${0.15 * (1 - distance / 150)})`;
-            ctx.lineWidth = 0.3;
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
+            const opacity = (1 - distance / 180) * 0.15; // Slightly increased connection opacity
+            ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`;
+            ctx.lineWidth = 0.3;
             ctx.stroke();
           }
         }
