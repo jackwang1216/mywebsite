@@ -34,8 +34,8 @@ export default function BackgroundEffect() {
         this.y = Math.random() * height;
         this.vx = (Math.random() - 0.5) * 0.3;
         this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 1.5;
-        this.color = `rgba(255, 215, 0, ${Math.random() * 0.4 + 0.1})`; // Increased base opacity
+        this.size = Math.random() * 1.8 + 0.2; // Slightly larger particles with minimum size
+        this.color = `rgba(255, 215, 0, ${Math.random() * 0.5 + 0.15})`; // Increased opacity range
       }
 
       update(width: number, height: number) {
@@ -59,7 +59,7 @@ export default function BackgroundEffect() {
 
     // Create particles
     const particles: Particle[] = [];
-    for (let i = 0; i < 180; i++) { // Increased number of particles
+    for (let i = 0; i < 220; i++) { 
       particles.push(new Particle(canvas.width, canvas.height));
     }
 
@@ -80,7 +80,7 @@ export default function BackgroundEffect() {
         canvas.height / 2,
         canvas.width / 2
       );
-      gradient.addColorStop(0, 'rgba(255, 215, 0, 0.1)');
+      gradient.addColorStop(0, 'rgba(255, 215, 0, 0.15)'); // Slightly brighter center
       gradient.addColorStop(1, 'rgba(17, 17, 17, 0)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -98,13 +98,13 @@ export default function BackgroundEffect() {
           const dy = particle.y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 180) { // Increased connection distance
+          if (distance < 160) { 
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            const opacity = (1 - distance / 180) * 0.15; // Slightly increased connection opacity
+            const opacity = (1 - distance / 160) * 0.2; 
             ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`;
-            ctx.lineWidth = 0.3;
+            ctx.lineWidth = 0.4; // Slightly thicker lines
             ctx.stroke();
           }
         }
