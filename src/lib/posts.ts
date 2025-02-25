@@ -39,7 +39,7 @@ export function getAllPosts(): Post[] {
   });
 }
 
-export function getPostBySlug(slug: string): Post | null {
+export async function getPostBySlug(slug: string): Promise<Post | null> {
   const post = posts.find(p => p.slug === slug);
   return post || null;
 }
