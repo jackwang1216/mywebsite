@@ -23,12 +23,12 @@ const About: React.FC = () => {
     {
       title: "Quantitative Researcher",
       company: "MIT Sloan School of Management",
-      description: "Multilevel Factor: Trying to reacreate a multilevel factor that better represent the real world, under Damon Peterson",
+      description: "Multilevel Factor: Trying to recreate a multilevel factor that better represents the real world, under Damon Peterson",
     },
     {
       title: "Software Engineer Intern",
       company: "Forza",
-      description: "Improved their work enviornment website to improve productivity",
+      description: "Improved their work environment website to improve productivity",
     },
   ];
 
@@ -58,8 +58,8 @@ const About: React.FC = () => {
             <h3 className="text-3xl font-serif text-gold">My Journey</h3>
             <div className="prose prose-invert prose-lg">
               <p className="text-cream/80">
-                I'm an undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
-                quantitative research, and athletics. When I'm not coding or solving mathematical problems,
+                I&#39;m an undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
+                quantitative research, and athletics. When I&#39;m not coding or solving mathematical problems,
                 you can find me sprinting, lifting, playing soccer, and playing chess. 
               </p>
             </div>
