@@ -1,8 +1,9 @@
-import { getPostBySlug } from '@/lib/posts';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import type { Metadata } from 'next';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { getPostBySlug } from "@/lib/posts";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import type { Metadata } from "next";
 
 type Props = {
   params: {
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: "Post Not Found",
     };
   }
   return {
@@ -23,7 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPost({ params, searchParams: _searchParams}: Props) {
+export default async function BlogPost({
+  params,
+  searchParams: _searchParams,
+}: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -54,7 +58,9 @@ export default async function BlogPost({ params, searchParams: _searchParams}: P
         </Link>
 
         <article className="prose prose-invert prose-gold mx-auto">
-          <h1 className="text-5xl font-serif font-bold text-cream mb-4">{post.title}</h1>
+          <h1 className="text-5xl font-serif font-bold text-cream mb-4">
+            {post.title}
+          </h1>
           <div className="mb-8">
             <time className="text-gold/80">{post.date}</time>
           </div>
