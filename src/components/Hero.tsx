@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 export default function Hero() {
   return (
     <header className="min-h-screen flex items-center justify-center relative">
@@ -13,12 +11,6 @@ export default function Hero() {
           Software Engineer • Developer • Researcher • Athlete
         </p>
         <div className="flex items-center justify-center space-x-6">
-          <Link
-            href="/blog"
-            className="px-6 py-3 bg-dark-accent text-gold border border-gold/20 rounded-lg hover:bg-gold/10 transition-colors duration-300"
-          >
-            Read My Blog
-          </Link>
           <a
             href="https://github.com/jackwang1216"
             target="_blank"
