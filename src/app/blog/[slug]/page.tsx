@@ -17,7 +17,7 @@ export default function BlogPost({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-dark py-20">
+    <div className="min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"

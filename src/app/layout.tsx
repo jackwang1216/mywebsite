@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
+import BackgroundEffect from "@/components/BackgroundEffect";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -9,7 +10,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Jack Wang",
-  description: "Software Engineer, Mathematician, and Athlete",
+  description: "Software Engineer & Developer & Researcher & Athlete",
 };
 
 export default function RootLayout({
@@ -19,8 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable}`}>
-      <body className="bg-dark">
-        <main>{children}</main>
+      <body className="relative">
+        <BackgroundEffect />
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );

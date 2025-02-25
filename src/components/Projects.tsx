@@ -57,7 +57,7 @@ const Projects: React.FC = () => {
   const [isHovered, setIsHovered] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="min-h-screen py-20 bg-dark">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
