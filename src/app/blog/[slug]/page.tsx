@@ -5,7 +5,10 @@ import ReactMarkdown from 'react-markdown';
 import type { Metadata } from 'next';
 
 type Props = {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -20,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPost({ params }: Props) {
+export default async function BlogPost({ params, searchParams: _searchParams}: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
