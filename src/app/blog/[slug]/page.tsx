@@ -7,10 +7,9 @@ interface Props {
   params: {
     slug: string;
   };
-  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function BlogPost({ params, searchParams }: Props) {
+export default async function BlogPost({ params }: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
