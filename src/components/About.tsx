@@ -58,7 +58,7 @@ const About: React.FC = () => {
             <h3 className="text-3xl font-serif text-gold">My Journey</h3>
             <div className="prose prose-invert prose-lg">
               <p className="text-cream/80">
-                I&#39;m an undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
+                I&#39;m a tri-lingual undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
                 quantitative research, and athletics. When I&#39;m not coding or solving mathematical problems,
                 you can find me sprinting, lifting, playing soccer, and playing chess.
               </p>
