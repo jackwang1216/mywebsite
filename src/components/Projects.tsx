@@ -37,10 +37,12 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Simplify.ai(Almost done, need UI work and few more functions)",
+    title: "Simplify.ai",
     description:
       "AI tool that helps illiterate, non-native speaking, and other disabled people",
-    technologies: ["React", "Python", "OpenAI"],
+    technologies: ["React", "Python", "Azure Vision", "FastAPI"],
+    image: "/assets/simplifyai.png",
+    video: "/assets/simplifyai-video.mp4",
     link: "https://github.com/jackwang1216/Simplified.ai",
   },
   {
