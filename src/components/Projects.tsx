@@ -23,7 +23,7 @@ const projects: Project[] = [
     technologies: ["React", "Node.js", "MongoDB"],
     image: "/assets/boldly.png",
     video: "/assets/Boldly-video.mp4",
-    link: "https://www.linkedin.com/in/jackwang1216/",
+    link: "https://github.com/weblab-class/jackwang1216-hansenfan-JerryLiu06",
   },
   {
     id: 2,
