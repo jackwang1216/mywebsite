@@ -14,6 +14,9 @@ export default {
         'cream': '#F5F5F4',
         'gold': '#FFD700',
       },
+      fontFamily:{
+        fancy: ["Lavishly Yours", "cursive"]
+      },
       typography: {
         DEFAULT: {
           css: {
