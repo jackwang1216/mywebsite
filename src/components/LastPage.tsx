@@ -21,46 +21,78 @@ export default function LastPage() {
           priority
         />
       </motion.div>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute bottom-4 right-4 text-cream text-2xl font-fancy"
-      >
+
+      {/* Desktop Footer - Hidden on mobile */}
+      <div className="hidden md:block">
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 right-4 text-cream text-2xl font-fancy"
+        >
         © 2025 Jack Wang
-      </motion.footer>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute bottom-4 left-4 text-cream text-2xl font-fancy"
-      >
-        Forged in Boston.
-      </motion.footer>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute bottom-4 left-1/3 -translate-x-full text-cream text-2xl font-fancy"
-      >
-        おう　ひき
-      </motion.footer>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute bottom-4 right-1/2 translate-x-1/2 text-cream text-2xl font-fancy"
-      >
-        Jack Wang
-      </motion.footer>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute bottom-4 right-1/3 translate-x-full text-cream text-2xl font-fancy"
-      >
-        汪曳
-      </motion.footer>
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 left-4 text-cream text-2xl font-fancy"
+        >
+          Forged in Boston.
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 left-1/3 -translate-x-full text-cream text-2xl font-fancy"
+        >
+          おう　ひき
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 right-1/2 translate-x-1/2 text-cream text-2xl font-fancy"
+        >
+          Jack Wang
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 right-1/3 translate-x-full text-cream text-2xl font-fancy"
+        >
+          汪曳
+        </motion.footer>
+      </div>
+
+      {/* Mobile Footer - Hidden on desktop */}
+      <div className="md:hidden">
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-20 left-1/2 -translate-x-1/2 text-cream text-xl font-fancy text-center"
+        >
+          Jack Wang · おう　ひき · 汪曳
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 text-cream text-xl font-fancy"
+        >
+          Forged in Boston.
+        </motion.footer>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-cream text-xl font-fancy"
+        >
+          2025 Jack Wang
+        </motion.footer>
+      </div>
     </section>
   );
 }
