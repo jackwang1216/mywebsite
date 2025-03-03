@@ -6,25 +6,27 @@ export default function LastPage() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <motion.div
-        initial={{ opacity: 0, y: 250, scale: 0.5 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1.0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.25, ease: "easeOut" }}
-        className="w-full max-w-7xl mx-auto px-4 py-16 flex flex-col items-center justify-center relative"
+        transition={{ duration: 1 }}
+        className="w-full max-w-7xl mx-auto px-4 py-16 flex flex-col items-center justify-center relative [perspective:1000px]"
       >
         <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="text-6xl md:text-7xl text-cream font-fancy mb-6"
+          initial={{ opacity: 0, rotateX: 90 }}
+          whileInView={{ opacity: 1, rotateX: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+          className="text-8xl md:text-9xl text-cream font-fancy mb-10"
         >
           失败是成功之母
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="text-2xl md:text-3xl text-cream/80 font-fancy"
+          initial={{ opacity: 0, rotateX: -90 }}
+          whileInView={{ opacity: 1, rotateX: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
+          className="text-4xl md:text-5xl text-cream/80 font-fancy"
         >
           Failure is The Mother of Success
         </motion.p>
