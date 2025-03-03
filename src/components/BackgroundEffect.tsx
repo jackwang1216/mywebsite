@@ -59,7 +59,11 @@ export default function BackgroundEffect() {
 
     // Create particles
     const particles: Particle[] = [];
-    for (let i = 0; i < 230; i++) {
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 120 : 230;  // Fewer particles on mobile
+    const connectionDistance = isMobile ? 120 : 160;  // Shorter connection distance on mobile
+    
+    for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(canvas.width, canvas.height));
     }
 
@@ -98,11 +102,11 @@ export default function BackgroundEffect() {
           const dy = particle.y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 160) {
+          if (distance < connectionDistance) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            const opacity = (1 - distance / 160) * 0.3;
+            const opacity = (1 - distance / connectionDistance) * 0.3;
             ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`;
             ctx.lineWidth = 0.4;
             ctx.stroke();
