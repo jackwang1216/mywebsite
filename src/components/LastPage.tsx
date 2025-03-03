@@ -1,25 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function LastPage() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 250, scale: 0.5 }}
-        whileInView={{ opacity: 0.75, y: 0, scale: 1.0 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1.0 }}
         viewport={{ once: true }}
         transition={{ duration: 1.25, ease: "easeOut" }}
-        className="w-full max-w-7xl mx-auto px-4 py-16 flex flex-col items-center relative aspect-[21/9] rounded-lg overflow-hidden shadow-2xl"
+        className="w-full max-w-7xl mx-auto px-4 py-16 flex flex-col items-center justify-center relative"
       >
-        <Image
-          src="/website-banner.png"
-          alt="Banner"
-          fill
-          className="object-cover"
-          priority
-        />
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+          className="text-6xl md:text-7xl text-cream font-fancy mb-6"
+        >
+          失败是成功之母
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="text-2xl md:text-3xl text-cream/80 font-fancy"
+        >
+          Failure is The Mother of Success
+        </motion.p>
       </motion.div>
 
       {/* Desktop Footer - Hidden on mobile */}
