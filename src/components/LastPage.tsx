@@ -7,8 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function LastPage() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const chineseQuoteRef = useRef<HTMLHeadingElement>(null);
-  const englishQuoteRef = useRef<HTMLParagraphElement>(null);
   const desktopFooterRefs = useRef<HTMLDivElement>(null);
   const mobileFooterRefs = useRef<HTMLDivElement>(null);
   
@@ -164,10 +162,6 @@ export default function LastPage() {
       const { clientX, clientY } = e;
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      
-      // Calculate mouse position relative to center of window
-      const mouseXPercent = (clientX / windowWidth - 0.5) * 2; // -1 to 1
-      const mouseYPercent = (clientY / windowHeight - 0.5) * 2; // -1 to 1
       
       // We've removed all mouse tracking effects for the quotes
       // Only keep subtle container effects if needed
