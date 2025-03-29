@@ -158,7 +158,7 @@ export default function LastPage() {
     }
     
     // Create a special 3D hover effect for the container on mouse move
-    const handleMouseMove = (_e: MouseEvent) => {
+    const handleMouseMove = () => {
       // All mouse tracking effects have been removed
       // Function kept as a placeholder in case effects are added back in the future
     };
