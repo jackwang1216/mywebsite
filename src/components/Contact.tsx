@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,225 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const socialIconsRef = useRef<HTMLDivElement>(null);
+  const inputRefs = useRef<HTMLElement[]>([]);
+  
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Main timeline for section entrance
+    const mainTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse"
+      }
+    });
+    
+    // Animate title section
+    if (titleRef.current) {
+      const titleElements = titleRef.current.children;
+      gsap.set(titleElements, { opacity: 0, y: 30 });
+      
+      mainTl.to(titleElements, {
+        opacity: 1,
+        y:.0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out"
+      });
+    }
+    
+    // Animate info section with a side entrance
+    if (infoRef.current) {
+      const paragraphs = infoRef.current.querySelectorAll('p');
+      const contactItems = infoRef.current.querySelectorAll('.flex.items-center');
+      
+      gsap.set([infoRef.current, ...Array.from(paragraphs), ...Array.from(contactItems)], { 
+        opacity: 0, 
+        x: -40 
+      });
+      
+      mainTl.to(infoRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.4")
+      .to(Array.from(paragraphs), {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.2)"
+      }, "-=0.6")
+      .to(Array.from(contactItems), {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.2)"
+      }, "-=0.4");
+    }
+    
+    // Animate social icons with bounce effect
+    if (socialIconsRef.current) {
+      const icons = socialIconsRef.current.querySelectorAll('a');
+      
+      gsap.set(Array.from(icons), { 
+        opacity: 0, 
+        scale: 0.5,
+        y: 20
+      });
+      
+      mainTl.to(Array.from(icons), {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.7)"
+      }, "-=0.2");
+      
+      // Add hover animations to social icons
+      Array.from(icons).forEach(icon => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            y: -5,
+            scale: 1.1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+      });
+    }
+    
+    // Animate form with a typewriter effect for labels and reveal for inputs
+    if (formRef.current) {
+      gsap.set(formRef.current, { 
+        opacity: 0, 
+        x: 40 
+      });
+      
+      const labels = formRef.current.querySelectorAll('label');
+      const inputs = formRef.current.querySelectorAll('input, textarea');
+      const button = formRef.current.querySelector('button');
+      
+      // Create separate timeline for form elements
+      const formTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: formRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      
+      formTl.to(formRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      })
+      .fromTo(Array.from(labels), 
+        { opacity: 0, y: 10 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          stagger: 0.1,
+          duration: 0.4,
+          ease: "power2.out"
+        }, 
+        "-=0.4"
+      )
+      .fromTo(Array.from(inputs), 
+        { 
+          opacity: 0, 
+          scaleX: 0.8,
+          transformOrigin: "left" 
+        },
+        { 
+          opacity: 1, 
+          scaleX: 1, 
+          stagger: 0.1,
+          duration: 0.5,
+          ease: "power3.out" 
+        }, 
+        "-=0.2"
+      )
+      .fromTo(button,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" },
+        "-=0.1"
+      );
+      
+      // Add focus/blur animations for form inputs
+      Array.from(inputs).forEach(input => {
+        input.addEventListener('focus', () => {
+          gsap.to(input, {
+            borderColor: "rgba(218, 165, 32, 0.8)",
+            boxShadow: "0 0 0 3px rgba(218, 165, 32, 0.2)",
+            duration: 0.3
+          });
+        });
+        
+        input.addEventListener('blur', () => {
+          gsap.to(input, {
+            borderColor: "rgba(218, 165, 32, 0.2)",
+            boxShadow: "none",
+            duration: 0.3
+          });
+        });
+      });
+    }
+    
+    // Cleanup function
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+  
+  // Animation for form submission status
+  useEffect(() => {
+    if (submitStatus === 'success' || submitStatus === 'error') {
+      const statusElement = document.querySelector(
+        submitStatus === 'success' ? '.text-green-500' : '.text-red-500'
+      );
+      
+      if (statusElement) {
+        gsap.fromTo(statusElement,
+          { opacity: 0, y: 10 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.4,
+            ease: "power2.out"
+          }
+        );
+      }
+    }
+  }, [submitStatus]);
+  
+  // Function to collect input refs
+  const addToInputRefs = (el: HTMLElement | null) => {
+    if (el && !inputRefs.current.includes(el)) {
+      inputRefs.current.push(el);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,31 +262,19 @@ const Contact = () => {
   };
 
   return (
-    <section className="py-20">
+    <section ref={sectionRef} className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-5xl font-serif font-bold text-cream mb-4">
             Get in Touch
           </h2>
           <p className="text-xl text-cream/80 font-serif">
             Let&#39;s connect and create something amazing together
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
+          <div ref={infoRef} className="space-y-6">
             <h3 className="text-3xl font-serif text-gold">
               Contact Information
             </h3>
@@ -121,7 +329,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex space-x-4 pt-6">
+            <div ref={socialIconsRef} className="flex space-x-4 pt-6">
               <a
                 href="https://github.com/jackwang1216"
                 target="_blank"
@@ -155,13 +363,10 @@ const Contact = () => {
                 </svg>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+          <div 
+            ref={formRef}
             className="bg-dark-accent p-8 rounded-lg border border-cream/10"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -176,6 +381,7 @@ const Contact = () => {
                   type="text"
                   id="name"
                   required
+                  ref={addToInputRefs as React.RefCallback<HTMLInputElement>}
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -194,6 +400,7 @@ const Contact = () => {
                   type="email"
                   id="email"
                   required
+                  ref={addToInputRefs as React.RefCallback<HTMLInputElement>}
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -212,6 +419,7 @@ const Contact = () => {
                   id="message"
                   required
                   rows={4}
+                  ref={addToInputRefs as React.RefCallback<HTMLTextAreaElement>}
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
@@ -235,7 +443,7 @@ const Contact = () => {
                 </p>
               )}
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
