@@ -3,6 +3,7 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import LastPage from "@/components/LastPage";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
       <Hero />
       <div className="border-t border-gold/10">
         <About />
+      </div>
+      <div className="border-t border-gold/10">
+        <Gallery />
       </div>
       <div className="border-t border-gold/10">
         <Projects />
