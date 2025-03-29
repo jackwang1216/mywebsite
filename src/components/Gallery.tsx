@@ -18,15 +18,35 @@ export default function Gallery() {
     { type: "image", src: "/Aria_me.jpeg", alt: "With Aria" },
     { type: "image", src: "/governer.jpeg", alt: "With Iowa Governor" },
     { type: "image", src: "/jerry_me.jpeg", alt: "Friend" },
-    { type: "video", src: "/60m.mp4", alt: "60m Race @ MIT" },
+    {
+      type: "video",
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284030/jackwang-gallery/60m.mp4",
+      alt: "60m Race @ MIT",
+      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg"
+    },
     { type: "image", src: "/mit_fresh.jpeg", alt: "MIT Freshies" },
     { type: "image", src: "/mit_start.jpeg", alt: "MIT indoor 200 start" },
-    { type: "video", src: "/drake 4x4.mp4", alt: "Drake 4x4 Relay" },
+    {
+      type: "video",
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284035/jackwang-gallery/drake_4x4.mp4",
+      alt: "Drake 4x4 Relay",
+      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg"
+    },
     { type: "image", src: "/professional.jpeg", alt: "Professional Me lol" },
-    { type: "video", src: "/indoor open 4.mp4", alt: "Indoor state Open 4" },
+    {
+      type: "video",
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284043/jackwang-gallery/indoor_open_4.mp4",
+      alt: "Indoor state Open 4",
+      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg"
+    },
     { type: "image", src: "/sprint_team.jpeg", alt: "MIT Sprint Team" },
-    { type: "video", src: "/state 4x4 prelim.mp4", alt: "State 4x4 Preliminaries" },
-    { type: "image", src: "/state_200.jpeg", alt: "State 200m" },
+    {
+      type: "video",
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
+      alt: "State 4x4 Preliminary",
+      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg"
+    },
+    { type: "image", src: "/state_200.jpeg", alt: "Fav picture" },
   ];
 
   useEffect(() => {
@@ -190,7 +210,7 @@ export default function Gallery() {
     >
       <div className="absolute top-0 left-0 p-8 z-10">
         <h2 className="text-4xl md:text-6xl text-cream font-fancy">Gallery</h2>
-        <p className="text-xl text-cream/70 font-fancy mt-2">Images & Performances</p>
+        <p className="text-xl text-cream/70 font-fancy mt-2">Enjoy :D</p>
       </div>
 
       {/* Volume control */}
@@ -227,11 +247,10 @@ export default function Gallery() {
               <div className="relative w-full h-full">
                 <Image
                   src={item.src}
-                  alt={item.alt || "Gallery image"}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="rounded-lg"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  alt={item.alt}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-cover rounded-lg"
                 />
               </div>
             ) : (
@@ -239,10 +258,11 @@ export default function Gallery() {
                 <video
                   id={`gallery-video-${index}`}
                   src={item.src}
+                  poster={item.thumbnail} // Use Cloudinary thumbnail
                   loop
                   muted
                   playsInline
-                  preload="metadata"
+                  preload="metadata" // Only load metadata initially
                   className="w-full h-full object-cover rounded-lg"
                 />
                 <div className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300 ${playingVideos[index] ? 'opacity-0' : 'opacity-100'}`}>
@@ -250,7 +270,7 @@ export default function Gallery() {
                     <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
                   </svg>
                 </div>
-                
+
                 {/* Audio controls visible only when video is playing and is the active item */}
                 {playingVideos[index] && activeItem === index && (
                   <div className="absolute bottom-16 right-4 flex gap-2 z-20">
