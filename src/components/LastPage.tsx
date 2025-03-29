@@ -158,13 +158,9 @@ export default function LastPage() {
     }
     
     // Create a special 3D hover effect for the container on mouse move
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      
-      // We've removed all mouse tracking effects for the quotes
-      // Only keep subtle container effects if needed
+    const handleMouseMove = (_e: MouseEvent) => {
+      // All mouse tracking effects have been removed
+      // Function kept as a placeholder in case effects are added back in the future
     };
     
     // Add event listener for 3D hover effect
