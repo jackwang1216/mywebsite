@@ -1,14 +1,63 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 export default function Hero() {
+  const fullName = "Jack\nWang";
+  const fullDescription = "Software Engineer • Developer • Researcher • Athlete";
+  
+  const [displayName, setDisplayName] = useState("");
+  const [displayDescription, setDisplayDescription] = useState("");
+  const [isNameDone, setIsNameDone] = useState(false);
+  const [isDescriptionDone, setIsDescriptionDone] = useState(false);
+  
+  // Effect for typing the name
+  useEffect(() => {
+    if (displayName === fullName) {
+      setIsNameDone(true);
+      return;
+    }
+    
+    const timeout = setTimeout(() => {
+      setDisplayName(fullName.substring(0, displayName.length + 1));
+    }, 150); // Adjust speed as needed
+    
+    return () => clearTimeout(timeout);
+  }, [displayName, fullName]);
+  
+  // Effect for typing the description after the name is complete
+  useEffect(() => {
+    if (!isNameDone) return;
+    
+    if (displayDescription === fullDescription) {
+      setIsDescriptionDone(true);
+      return;
+    }
+    
+    const timeout = setTimeout(() => {
+      setDisplayDescription(fullDescription.substring(0, displayDescription.length + 1));
+    }, 75); // Faster typing for description
+    
+    return () => clearTimeout(timeout);
+  }, [displayDescription, fullDescription, isNameDone]);
+
   return (
     <header className="min-h-screen flex items-center justify-center relative">
       <div className="text-center space-y-8">
         <h1 className="text-8xl font-serif font-bold text-cream">
-          Jack<br />Wang
+          {displayName.split('\n').map((line, i) => (
+            <span key={i}>
+              {line}
+              {i < displayName.split('\n').length - 1 && <br />}
+            </span>
+          ))}
+          {!isNameDone && <span className="inline-block animate-blink ml-1">|</span>}
         </h1>
         <p className="text-2xl text-cream/80 font-serif italic">
-          Software Engineer • Developer • Researcher • Athlete
+          {displayDescription}
+          {!isDescriptionDone && isNameDone && 
+            <span className="inline-block animate-blink ml-1">|</span>
+          }
         </p>
         <div className="flex items-center justify-center space-x-6">
           <a
