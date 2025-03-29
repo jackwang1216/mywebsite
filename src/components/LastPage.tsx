@@ -40,7 +40,7 @@ export default function LastPage() {
           transition={{ duration: 1.5 }}
           className="absolute bottom-4 right-4 text-cream text-2xl font-fancy"
         >
-        © 2025 Jack Wang
+          © 2025 Jack Wang
         </motion.footer>
         <motion.footer
           initial={{ opacity: 0 }}
@@ -100,7 +100,7 @@ export default function LastPage() {
           transition={{ duration: 1.5 }}
           className="absolute bottom-4 left-1/2 -translate-x-1/2 text-cream text-xl font-fancy"
         >
-          2025 Jack Wang
+          © 2025 Jack Wang
         </motion.footer>
       </div>
     </section>
