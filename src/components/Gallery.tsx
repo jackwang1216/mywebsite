@@ -33,6 +33,7 @@ export default function Gallery() {
       thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg"
     },
     { type: "image", src: "/professional.jpeg", alt: "Professional Me lol" },
+    { type: "image", src: "/mom_and_I.jpeg", alt: "Mom and I"},
     {
       type: "video",
       src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284043/jackwang-gallery/indoor_open_4.mp4",
@@ -46,7 +47,7 @@ export default function Gallery() {
       alt: "State 4x4 Preliminary",
       thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg"
     },
-    { type: "image", src: "/state_200.jpeg", alt: "Fav picture" },
+    { type: "image", src: "/state_200.jpeg", alt: "State 200" },
   ];
 
   useEffect(() => {
