@@ -15,6 +15,8 @@ export default function Gallery() {
 
   // Gallery items with your media files
   const galleryItems = [
+    { type: "image", src: "/professional.jpeg", alt: "Professional Me lol" },
+    { type: "image", src: "/mom_and_I.jpeg", alt: "Mom and I" },
     { type: "image", src: "/Aria_me.jpeg", alt: "With Aria" },
     { type: "image", src: "/governer.jpeg", alt: "With Iowa Governor" },
     { type: "image", src: "/jerry_me.jpeg", alt: "Friend" },
@@ -22,7 +24,8 @@ export default function Gallery() {
       type: "video",
       src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284030/jackwang-gallery/60m.mp4",
       alt: "60m Race @ MIT",
-      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg"
+      thumbnail:
+        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg",
     },
     { type: "image", src: "/mit_fresh.jpeg", alt: "MIT Freshies" },
     { type: "image", src: "/mit_start.jpeg", alt: "MIT indoor 200 start" },
@@ -30,22 +33,22 @@ export default function Gallery() {
       type: "video",
       src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284035/jackwang-gallery/drake_4x4.mp4",
       alt: "Drake 4x4 Relay",
-      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg"
+      thumbnail:
+        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg",
     },
-    { type: "image", src: "/professional.jpeg", alt: "Professional Me lol" },
-    { type: "image", src: "/mom_and_I.jpeg", alt: "Mom and I"},
     {
       type: "video",
       src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284043/jackwang-gallery/indoor_open_4.mp4",
       alt: "Indoor state Open 4",
-      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg"
+      thumbnail:
+        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg",
     },
-    { type: "image", src: "/sprint_team.jpeg", alt: "MIT Sprint Team" },
     {
       type: "video",
       src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
       alt: "State 4x4 Preliminary",
-      thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg"
+      thumbnail:
+        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg",
     },
     { type: "image", src: "/state_200.jpeg", alt: "State 200" },
   ];
