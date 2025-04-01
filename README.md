@@ -1,1 +1,1 @@
-Email me @jw1216@mit.edu!!
+Email me @thejackwang1216@gmail.com!
