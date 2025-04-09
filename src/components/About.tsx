@@ -30,14 +30,22 @@ const About: React.FC = () => {
 
   const experiences = [
     {
+      title: "Software Engineer Intern",
+      company: "Truewind (YC W23)",
+      description: "Incoming Software Engineer Intern",
+      date: "June 2025 - Sep. 2025"
+    },
+    {
       title: "Quantitative Researcher",
       company: "MIT Sloan School of Management",
       description: "Multilevel Factor: Trying to recreate a multilevel factor that better represents the real world, under Damon Peterson",
+      date: "Nov. 2024 - Present"
     },
     {
       title: "Software Engineer Intern",
       company: "Forza",
       description: "Improved their work environment website to improve productivity. Currently working on their new website",
+      date: "June 2024 - Present"
     },
   ];
 
@@ -265,7 +273,10 @@ const About: React.FC = () => {
                     ref={addToExperienceRefs}
                     className="bg-dark-accent p-6 rounded-lg border border-cream/10"
                   >
-                    <h4 className="text-xl text-cream font-serif">{exp.title}</h4>
+                    <div className="flex justify-between items-start">
+                      <h4 className="text-xl text-cream font-serif">{exp.title}</h4>
+                      <span className="text-gold/70 text-sm">{exp.date}</span>
+                    </div>
                     <p className="text-gold/80">{exp.company}</p>
                     <p className="text-cream/60 mt-2">{exp.description}</p>
                   </div>
