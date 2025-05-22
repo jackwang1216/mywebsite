@@ -4,6 +4,7 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import LastPage from "@/components/LastPage";
 import Gallery from "@/components/Gallery";
+import JackAI from "@/components/JackAI";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <div className="border-t border-gold/10">
         <Gallery />
       </div>
+      <JackAI />
     </main>
   );
 }
