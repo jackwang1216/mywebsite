@@ -13,9 +13,6 @@ export default function Home() {
         <About />
       </div>
       <div className="border-t border-gold/10">
-        <Gallery />
-      </div>
-      <div className="border-t border-gold/10">
         <Projects />
       </div>
       <div className="border-t border-gold/10">
@@ -23,6 +20,9 @@ export default function Home() {
       </div>
       <div className="border-t border-gold/10">
         <LastPage />
+      </div>
+      <div className="border-t border-gold/10">
+        <Gallery />
       </div>
     </main>
   );
