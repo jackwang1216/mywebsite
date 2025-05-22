@@ -130,7 +130,7 @@ export default function Gallery() {
       // Cleanup ScrollTrigger instances
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [galleryItems]);
 
   // Function to handle hover for videos
   const handleMouseEnter = (index: number) => {

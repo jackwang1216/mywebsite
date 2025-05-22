@@ -51,7 +51,7 @@ Keep your responses concise, helpful, and in a conversational tone.\n\nMaintain 
     if (history && Array.isArray(history) && history.length > 0) {
       // Only include valid history items
       const validHistory = history.filter(
-        (item: any) => 
+        (item: {role?: string; content?: string}) => 
           item && 
           typeof item === 'object' && 
           (item.role === 'user' || item.role === 'assistant') && 

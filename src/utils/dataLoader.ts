@@ -32,7 +32,7 @@ function splitIntoChunks(text: string, chunkSize: number = 1000): string[] {
 // Function to load a text file and add it to the knowledge base
 export async function loadTextFile(
   filePath: string,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, unknown> = {}
 ): Promise<boolean> {
   try {
     const content = fs.readFileSync(filePath, 'utf-8');
@@ -64,7 +64,7 @@ export async function loadTextFile(
 // Function to load markdown files from a directory
 export async function loadMarkdownFiles(
   dirPath: string,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, unknown> = {}
 ): Promise<boolean> {
   try {
     const files = fs.readdirSync(dirPath);
@@ -88,7 +88,7 @@ export async function loadMarkdownFiles(
 
 // Function to add structured data directly
 export async function addStructuredData(
-  data: Record<string, any>,
+  data: Record<string, unknown>,
   category: string
 ): Promise<boolean> {
   try {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
-import { loadTextFile, loadMarkdownFiles } from '@/utils/dataLoader';
+import { loadMarkdownFiles } from '@/utils/dataLoader';
 import { getAllDocuments } from '@/utils/knowledgeBase';
 import { supabase } from '@/utils/supabase';
 
@@ -18,14 +18,8 @@ export async function POST(request: NextRequest) {
     }
 
     // First, check if Supabase connection is working
-    const { data: testData, error: testError } = await supabase.from('jack_knowledge').select('count');
-    if (testError) {
-      return NextResponse.json({
-        success: false,
-        error: 'Supabase connection failed',
-        details: testError
-      }, { status: 500 });
-    }
+    // Test data connection
+    await supabase.from('documents').select('*').limit(1);
 
     // Clear existing data if requested
     const { clearExisting } = await request.json().catch(() => ({ clearExisting: false }));
@@ -53,7 +47,7 @@ export async function POST(request: NextRequest) {
     for (const file of files) {
       const filePath = path.join(dataDir, file);
       const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const result = await loadTextFile(filePath, {
+      const result = await loadMarkdownFiles(filePath, {
         category: 'personal',
         type: 'markdown',
         fileName: file

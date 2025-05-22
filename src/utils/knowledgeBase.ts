@@ -4,7 +4,7 @@ import { supabase } from './supabase';
 export interface KnowledgeDocument {
   id?: number;
   content: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   embedding?: number[];
 }
 
@@ -38,7 +38,7 @@ async function generateEmbedding(text: string): Promise<number[]> {
  */
 export async function addToKnowledgeBase(
   content: string,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, unknown> = {}
 ): Promise<boolean> {
   try {
     // Generate embedding for the content
