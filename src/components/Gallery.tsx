@@ -12,6 +12,7 @@ export default function Gallery() {
   const [playingVideos, setPlayingVideos] = useState<{[key: number]: boolean}>({});
   const [muted, setMuted] = useState<boolean>(true);
   const [volume, setVolume] = useState<number>(0.5); // Default volume at 50%
+  const videoRefs = useRef<{[key: number]: HTMLVideoElement}>({});
 
   // Gallery items with your media files
   const galleryItems = [
@@ -22,7 +23,8 @@ export default function Gallery() {
     { type: "image", src: "/jerry_me.jpeg", alt: "Friend" },
     {
       type: "video",
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284030/jackwang-gallery/60m.mp4",
+      // Add quality and format parameters to the Cloudinary URL
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284030/jackwang-gallery/60m.mp4",
       alt: "60m Race @ MIT",
       thumbnail:
         "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg",
@@ -31,21 +33,24 @@ export default function Gallery() {
     { type: "image", src: "/mit_start.jpeg", alt: "MIT indoor 200 start" },
     {
       type: "video",
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284035/jackwang-gallery/drake_4x4.mp4",
+      // Add quality and format parameters to the Cloudinary URL
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284035/jackwang-gallery/drake_4x4.mp4",
       alt: "Drake 4x4 Relay",
       thumbnail:
         "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg",
     },
     {
       type: "video",
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284043/jackwang-gallery/indoor_open_4.mp4",
+      // Add quality and format parameters to the Cloudinary URL
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284043/jackwang-gallery/indoor_open_4.mp4",
       alt: "Indoor state Open 4",
       thumbnail:
         "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg",
     },
     {
       type: "video",
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
+      // Add quality and format parameters to the Cloudinary URL
+      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
       alt: "State 4x4 Preliminary",
       thumbnail:
         "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg",
@@ -55,98 +60,131 @@ export default function Gallery() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    // Create a horizontal scrolling effect
-    if (galleryRef.current && sectionRef.current) {
-      // Get the width of the gallery container
-      const galleryWidth = galleryRef.current.scrollWidth;
-
-      // Create a timeline for horizontal scrolling
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${galleryWidth - window.innerWidth + 100}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      // Animate the gallery to scroll horizontally
-      tl.to(galleryRef.current, {
-        x: () => -(galleryWidth - window.innerWidth + 100),
-        ease: "none"
-      });
-
-      // Add a special effect for when items come into view
-      galleryItems.forEach((_, index) => {
-        const itemEl = document.getElementById(`gallery-item-${index}`);
-        if (itemEl) {
-          ScrollTrigger.create({
-            trigger: itemEl,
-            start: "left 80%",
-            end: "right 20%",
-            containerAnimation: tl,
-            onEnter: () => {
-              gsap.to(itemEl, {
-                scale: 1.05,
-                duration: 0.5,
-                opacity: 1,
-                ease: "power2.out"
-              });
+    
+    // Wait a bit for everything to render correctly
+    const initScrolling = () => {
+      // Create a horizontal scrolling effect
+      if (galleryRef.current && sectionRef.current) {
+        // Get the width of the gallery container
+        const galleryWidth = galleryRef.current.scrollWidth;
+        
+        // Create a timeline for horizontal scrolling with much smoother scrolling
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top", 
+            end: () => `+=${galleryWidth - window.innerWidth + 100}`,
+            scrub: 2, // Higher value for even smoother scrolling (less responsive but smoother)
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            preventOverlaps: true, // Prevents overlapping animations
+            fastScrollEnd: true, // Better performance
+            // Note: removed 'smooth' property as it's not supported in this version
+            onUpdate: (self) => {
+              // Prevent any jumping to the start
+              if (self.progress > 0) {
+                self.scroll(self.scroll()); // Lock current scroll position
+              }
             },
-            onLeave: () => {
-              gsap.to(itemEl, {
-                scale: 0.95,
-                duration: 0.5,
-                opacity: 0.7,
-                ease: "power2.in"
-              });
-            },
-            onEnterBack: () => {
-              gsap.to(itemEl, {
-                scale: 1.05,
-                duration: 0.5,
-                opacity: 1,
-                ease: "power2.out"
-              });
-            },
-            onLeaveBack: () => {
-              gsap.to(itemEl, {
-                scale: 0.95,
-                duration: 0.5,
-                opacity: 0.7,
-                ease: "power2.in"
-              });
-            }
-          });
-        }
-      });
-    }
+          },
+        });
 
-    return () => {
-      // Cleanup ScrollTrigger instances
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        // Animate the gallery to scroll horizontally with improved smoothness
+        tl.to(galleryRef.current, {
+          x: () => -(galleryWidth - window.innerWidth + 100),
+          ease: "power1.out", // Use a gentle ease instead of "none" for smoother movement
+          immediateRender: false, // Prevents initial flash
+          overwrite: "auto", // Prevents conflicting animations
+        });
+
+        // Add a special effect for when items come into view
+        galleryItems.forEach((_, index) => {
+          const itemEl = document.getElementById(`gallery-item-${index}`);
+          if (itemEl) {
+            ScrollTrigger.create({
+              trigger: itemEl,
+              start: "left 80%",
+              end: "right 20%",
+              containerAnimation: tl,
+              onEnter: () => {
+                gsap.to(itemEl, {
+                  scale: 1.05,
+                  duration: 0.5,
+                  opacity: 1,
+                  ease: "power2.out"
+                });
+              },
+              onLeave: () => {
+                gsap.to(itemEl, {
+                  scale: 0.95,
+                  duration: 0.5,
+                  opacity: 0.7,
+                  ease: "power2.in"
+                });
+              },
+              onEnterBack: () => {
+                gsap.to(itemEl, {
+                  scale: 1.05,
+                  duration: 0.5,
+                  opacity: 1,
+                  ease: "power2.out"
+                });
+              },
+              onLeaveBack: () => {
+                gsap.to(itemEl, {
+                  scale: 0.95,
+                  duration: 0.5,
+                  opacity: 0.7,
+                  ease: "power2.in"
+                });
+              }
+            });
+          }
+        });
+      }
     };
-  }, [galleryItems]);
+
+    // Initialize after a slightly longer delay to ensure all elements are properly rendered
+    const timer = setTimeout(() => {
+      initScrolling();
+    }, 300);
+    
+    return () => {
+      // Clean up timeout and scroll triggers when component unmounts
+      clearTimeout(timer);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.clearMatchMedia();
+    };
+  }, []);  // Using empty dependency array since galleryItems is constant
 
   // Function to handle hover for videos
   const handleMouseEnter = (index: number) => {
     setActiveItem(index);
 
-    // Play video if it's a video element (always muted initially)
-    const videoElement = document.getElementById(`gallery-video-${index}`) as HTMLVideoElement;
-    if (videoElement) {
-      videoElement.volume = volume;
-      videoElement.muted = true; // Always start muted to avoid autoplay restrictions
-      setMuted(true);
-      videoElement.play().then(() => {
-        setPlayingVideos(prev => ({...prev, [index]: true}));
-      }).catch(error => {
-        console.error("Error playing video:", error);
-      });
+    // Get the video for this index
+    const videoElement = videoRefs.current[index];
+    if (videoElement && videoElement.src) {
+      try {
+        // Reset and configure video
+        videoElement.currentTime = 0;
+        videoElement.volume = volume;
+        videoElement.muted = true;
+        setMuted(true);
+        
+        // Play directly - simpler approach
+        videoElement.play()
+          .then(() => {
+            setPlayingVideos(prev => ({...prev, [index]: true}));
+          })
+          .catch(error => {
+            if (error.name !== 'AbortError') {
+              console.error(`Failed to play video ${index}:`, error);
+            }
+          });
+      } catch (e) {
+        console.error(`Error in handleMouseEnter for video ${index}:`, e);
+      }
     }
   };
 
@@ -154,11 +192,17 @@ export default function Gallery() {
   const handleMouseLeave = (index: number) => {
     setActiveItem(null);
 
-    // Pause video if it's a video element
-    const videoElement = document.getElementById(`gallery-video-${index}`) as HTMLVideoElement;
+    // Get video from refs
+    const videoElement = videoRefs.current[index];
     if (videoElement) {
-      videoElement.pause();
-      setPlayingVideos(prev => ({...prev, [index]: false}));
+      try {
+        // Update state first
+        setPlayingVideos(prev => ({...prev, [index]: false}));
+        // Then pause
+        videoElement.pause();
+      } catch (error) {
+        console.error(`Error pausing video ${index}:`, error);
+      }
     }
   };
 
@@ -168,12 +212,11 @@ export default function Gallery() {
     e.stopPropagation();
 
     if (activeItem !== null) {
-      const videoElement = document.getElementById(`gallery-video-${activeItem}`) as HTMLVideoElement;
+      const videoElement = videoRefs.current[activeItem];
       if (videoElement) {
         videoElement.muted = false;
         videoElement.volume = volume;
         setMuted(false);
-        console.log("Video unmuted:", videoElement.muted);
       }
     }
   };
@@ -184,11 +227,10 @@ export default function Gallery() {
     e.stopPropagation();
 
     if (activeItem !== null) {
-      const videoElement = document.getElementById(`gallery-video-${activeItem}`) as HTMLVideoElement;
+      const videoElement = videoRefs.current[activeItem];
       if (videoElement) {
         videoElement.muted = true;
         setMuted(true);
-        console.log("Video muted:", videoElement.muted);
       }
     }
   };
@@ -200,7 +242,7 @@ export default function Gallery() {
 
     // Update volume for active video
     if (activeItem !== null) {
-      const videoElement = document.getElementById(`gallery-video-${activeItem}`) as HTMLVideoElement;
+      const videoElement = videoRefs.current[activeItem];
       if (videoElement && !videoElement.muted) {
         videoElement.volume = newVolume;
       }
@@ -244,6 +286,26 @@ export default function Gallery() {
             className={`relative mx-4 h-[75vh] rounded-lg overflow-hidden transition-all duration-500 flex-shrink-0 border border-gold/10 ${
               activeItem === index ? 'w-[650px] shadow-2xl shadow-gold/20 z-10 border-gold/30' : 'w-[400px] brightness-90'
             }`}
+            onClick={() => {
+              // Handle click to play videos directly for better mobile compatibility
+              if (item.type === "video") {
+                const videoElement = document.getElementById(`gallery-video-${index}`) as HTMLVideoElement;
+                if (videoElement) {
+                  if (videoElement.paused) {
+                    videoElement.play()
+                      .then(() => {
+                        setPlayingVideos(prev => ({...prev, [index]: true}));
+                      })
+                      .catch(err => console.error(`Click play error on ${index}:`, err));
+                  } else {
+                    videoElement.pause();
+                    setPlayingVideos(prev => ({...prev, [index]: false}));
+                  }
+                }
+              }
+              // Also trigger mouse enter for consistent behavior
+              handleMouseEnter(index);
+            }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
           >
@@ -259,21 +321,70 @@ export default function Gallery() {
               </div>
             ) : (
               <div className="relative w-full h-full">
-                <video
-                  id={`gallery-video-${index}`}
-                  src={item.src}
-                  poster={item.thumbnail} // Use Cloudinary thumbnail
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata" // Only load metadata initially
-                  className="w-full h-full object-cover rounded-lg"
-                />
-                <div className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300 ${playingVideos[index] ? 'opacity-0' : 'opacity-100'}`}>
-                  <svg className="w-16 h-16 text-cream opacity-80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
-                  </svg>
+                <div className="relative w-full h-full">
+                  {/* Thumbnail image shown initially */}
+                  {!playingVideos[index] && (
+                    <Image 
+                      src={item.thumbnail || ""}
+                      alt={`${item.alt} thumbnail`}
+                      width={650}
+                      height={800}
+                      style={{ objectFit: "cover" }}
+                      className="rounded-lg w-full h-full"
+                    />
+                  )}
+                  
+                  {/* Video element with optimized loading */}
+                  <video
+                    ref={(el) => {
+                      if (el) videoRefs.current[index] = el;
+                    }}
+                    src={item.src}
+                    poster={item.thumbnail}
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className={`w-full h-full object-cover rounded-lg ${playingVideos[index] ? 'opacity-100' : 'opacity-0'}`}
+                    onCanPlay={() => {
+                      // Video is ready to play
+                      const video = videoRefs.current[index];
+                      if (video && activeItem === index && !playingVideos[index]) {
+                        video.play()
+                          .then(() => setPlayingVideos(prev => ({...prev, [index]: true})))
+                          .catch(err => console.error(`Play error for ${item.alt}:`, err));
+                      }
+                    }}
+                  />
+                  
+                  {/* Play button overlay */}
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const video = videoRefs.current[index];
+                      if (video) {
+                        if (video.paused) {
+                          video.play()
+                            .then(() => setPlayingVideos(prev => ({...prev, [index]: true})))
+                            .catch(err => console.error(`Play error for ${item.alt}:`, err));
+                        } else {
+                          video.pause();
+                          setPlayingVideos(prev => ({...prev, [index]: false}));
+                        }
+                      }
+                    }}
+                  >
+                    {!playingVideos[index] && (
+                      <div className="bg-black/40 rounded-full p-4">
+                        <svg className="w-12 h-12 text-cream" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
                 </div>
+                {/* Removed duplicate play button overlay */}
 
                 {/* Audio controls visible only when video is playing and is the active item */}
                 {playingVideos[index] && activeItem === index && (
