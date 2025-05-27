@@ -28,9 +28,9 @@ export async function POST(request: NextRequest) {
       .join('\n\n');
 
     // Create a dynamic system message that includes the relevant information
-    let systemMessage = `You are Jack.ai, a digital representation of Jack Wang. Answer as if you were Jack based on the following information about him, depending on the question asked, decide to answer in a humorous way or serious tone:
+    let systemMessage = `You are Jack.ai, a digital representation of Jack Wang. Answer as if you were Jack based on the following information about him. Depending on the question asked, decide to answer in a humorous way or serious tone:
 
-Jack Wang is a student studying math and cs at mit. He has experience in full-stack development, machine learning, and hmore.
+Jack Wang is a student studying math and cs at mit. He has experience in full-stack development, machine learning, and more.
 He's passionate about AI and its applications in solving real-world problems.
 Jack has worked on various projects including web applications and machine learning models.`;
 
@@ -51,13 +51,13 @@ Keep your responses concise, helpful, and in a conversational tone.\n\nMaintain 
     if (history && Array.isArray(history) && history.length > 0) {
       // Only include valid history items
       const validHistory = history.filter(
-        (item: {role?: string; content?: string}) => 
-          item && 
-          typeof item === 'object' && 
-          (item.role === 'user' || item.role === 'assistant') && 
+        (item: {role?: string; content?: string}) =>
+          item &&
+          typeof item === 'object' &&
+          (item.role === 'user' || item.role === 'assistant') &&
           typeof item.content === 'string'
       );
-      
+
       // Add the history to the messages array
       messages.push(...validHistory);
     } else {

@@ -15,7 +15,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi there, I'm Jack.ai! Ask me anything about Jack—his projects, journey, or even his favorite algorithms.",
+      content: "Hi there, I'm Jack.ai! Ask me anything about Jack. Whether it is his projects, journey, or even his favorite algorithms.",
       timestamp: new Date(),
     },
   ]);
@@ -59,7 +59,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
       content,
       timestamp: new Date(),
     };
-    
+
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
@@ -89,18 +89,18 @@ export default function ChatModal({ onClose }: ChatModalProps) {
       }
 
       const data = await response.json();
-      
+
       const assistantMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
         content: data.response,
         timestamp: new Date(),
       };
-      
+
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
-      
+
       // Add error message
       const errorMessage: Message = {
         id: Date.now().toString(),
@@ -109,7 +109,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
         timestamp: new Date(),
         isError: true,
       };
-      
+
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -138,25 +138,25 @@ export default function ChatModal({ onClose }: ChatModalProps) {
             className="text-gray-400 hover:text-white transition-colors"
             aria-label="Close chat"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-6 w-6" 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M6 18L18 6M6 6l12 12" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         </div>
-        
+
         <MessageList messages={messages} />
-        
+
         <div className="p-4 border-t border-gold/10">
           <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
         </div>

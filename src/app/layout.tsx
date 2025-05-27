@@ -4,6 +4,7 @@ import "./globals.css";
 import BackgroundEffect from "@/components/BackgroundEffect";
 import ScrollToTop from "@/components/ScrollToTop";
 import GSAPProvider from "@/components/GSAPProvider";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable}`}>
+      <GoogleAnalytics />
       <body className="relative">
         <GSAPProvider>
           <ScrollToTop />
