@@ -1,0 +1,22 @@
+name: Ping Supabase Database
+
+on:
+  schedule:
+    # Run every 5 days to prevent the 7-day inactivity pause
+    - cron: '0 0 */5 * *'
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -X GET \
+          "https://tnmxqbydbfixdhzlcnpc.supabase.co/rest/v1/ping?select=*&limit=1" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+    
+    # The curl command will make a simple query to your database
+    # This counts as activity and will prevent the database from being paused
