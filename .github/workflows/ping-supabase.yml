@@ -2,8 +2,8 @@ name: Ping Supabase Database
 
 on:
   schedule:
-    # Run every 5 days to prevent the 7-day inactivity pause
-    - cron: '0 0 */5 * *'
+    # Run every 3 days to prevent the 7-day inactivity pause
+    - cron: '0 0 */3 * *'
   # Allow manual triggering
   workflow_dispatch:
 
