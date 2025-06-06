@@ -10,7 +10,11 @@ export default function ChatButton() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50 flex items-center justify-end gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end justify-end gap-3">
+        {/* Permanent label above button */}
+        <div className="bg-black/80 text-gold px-3 py-1.5 rounded-full text-sm font-medium shadow-lg border border-gold/20 backdrop-blur-sm mb-2">
+          Chat with Jack.ai
+        </div>
         {/* Tooltip label - only visible on hover */}
         <AnimatePresence>
           {isHovering && (
