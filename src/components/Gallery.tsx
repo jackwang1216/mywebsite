@@ -21,16 +21,16 @@ export default function Gallery() {
     { type: "image", src: "/Aria_me.jpeg", alt: "With Aria" },
     { type: "image", src: "/governer.jpeg", alt: "With Iowa Governor" },
     { type: "image", src: "/jerry_me.jpeg", alt: "Friend" },
-    {
-      type: "video",
-      // Add quality and format parameters to the Cloudinary URL
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284030/jackwang-gallery/60m.mp4",
-      alt: "60m Race @ MIT",
-      thumbnail:
-        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg",
-    },
-    { type: "image", src: "/mit_fresh.jpeg", alt: "MIT Freshies" },
-    { type: "image", src: "/mit_start.jpeg", alt: "MIT indoor 200 start" },
+    // {
+    //   type: "video",
+    //   // Add quality and format parameters to the Cloudinary URL
+    //   src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284030/jackwang-gallery/60m.mp4",
+    //   alt: "60m Race @ MIT",
+    //   thumbnail:
+    //     "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284030/jackwang-gallery/60m.jpg",
+    // },
+    // { type: "image", src: "/mit_fresh.jpeg", alt: "MIT Freshies" },
+    // { type: "image", src: "/mit_start.jpeg", alt: "MIT indoor 200 start" },
     {
       type: "video",
       // Add quality and format parameters to the Cloudinary URL
@@ -47,32 +47,32 @@ export default function Gallery() {
       thumbnail:
         "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg",
     },
-    {
-      type: "video",
-      // Add quality and format parameters to the Cloudinary URL
-      src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
-      alt: "State 4x4 Preliminary",
-      thumbnail:
-        "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg",
-    },
+    // {
+    //   type: "video",
+    //   // Add quality and format parameters to the Cloudinary URL
+    //   src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284053/jackwang-gallery/state_4x4_prelim.mp4",
+    //   alt: "State 4x4 Preliminary",
+    //   thumbnail:
+    //     "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284053/jackwang-gallery/state_4x4_prelim.jpg",
+    // },
     { type: "image", src: "/state_200.jpeg", alt: "State 200" },
   ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Wait a bit for everything to render correctly
     const initScrolling = () => {
       // Create a horizontal scrolling effect
       if (galleryRef.current && sectionRef.current) {
         // Get the width of the gallery container
         const galleryWidth = galleryRef.current.scrollWidth;
-        
+
         // Create a timeline for horizontal scrolling with much smoother scrolling
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top top", 
+            start: "top top",
             end: () => `+=${galleryWidth - window.innerWidth + 100}`,
             scrub: 2, // Higher value for even smoother scrolling (less responsive but smoother)
             pin: true,
@@ -149,7 +149,7 @@ export default function Gallery() {
     const timer = setTimeout(() => {
       initScrolling();
     }, 300);
-    
+
     return () => {
       // Clean up timeout and scroll triggers when component unmounts
       clearTimeout(timer);
@@ -171,7 +171,7 @@ export default function Gallery() {
         videoElement.volume = volume;
         videoElement.muted = true;
         setMuted(true);
-        
+
         // Play directly - simpler approach
         videoElement.play()
           .then(() => {
@@ -324,7 +324,7 @@ export default function Gallery() {
                 <div className="relative w-full h-full">
                   {/* Thumbnail image shown initially */}
                   {!playingVideos[index] && (
-                    <Image 
+                    <Image
                       src={item.thumbnail || ""}
                       alt={`${item.alt} thumbnail`}
                       width={650}
@@ -333,7 +333,7 @@ export default function Gallery() {
                       className="rounded-lg w-full h-full"
                     />
                   )}
-                  
+
                   {/* Video element with optimized loading */}
                   <video
                     ref={(el) => {
@@ -356,9 +356,9 @@ export default function Gallery() {
                       }
                     }}
                   />
-                  
+
                   {/* Play button overlay */}
-                  <div 
+                  <div
                     className="absolute inset-0 flex items-center justify-center cursor-pointer z-10"
                     onClick={(e) => {
                       e.stopPropagation();

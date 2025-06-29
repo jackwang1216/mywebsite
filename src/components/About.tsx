@@ -39,7 +39,7 @@ const About: React.FC = () => {
       title: "Quantitative Researcher",
       company: "MIT Sloan School of Management",
       description: "Multilevel Factor: Trying to recreate a multilevel factor that better represents the real world, under Damon Peterson",
-      date: "Nov. 2024 - Present"
+      date: "Nov. 2024 - May 2025"
     },
     {
       title: "Software Engineer Intern",
