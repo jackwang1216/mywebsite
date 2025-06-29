@@ -254,9 +254,7 @@ const About: React.FC = () => {
           <h2 className="text-5xl font-serif font-bold text-cream mb-4">
             About Me
           </h2>
-          <p className="text-xl text-cream/80 font-serif">
-            Heheheha
-          </p>
+          <p className="text-xl text-cream/80 font-serif">Heheheha</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
@@ -267,8 +265,11 @@ const About: React.FC = () => {
               <p className="text-cream/80">
                 I&#39;m a tri-lingual undergraduate at MIT studying Computer
                 Science and Mathematics. Right now I am working on couple
-                different things I enjoy, from a black-scholes option trading model to a an ai agent that could speed up the construction industry.
-                On the side, i like to lift, play soccer, and play chess(very washed).
+                different things I enjoy, from a{" "}
+                <strong>black-scholes option trading model</strong> to an
+                <strong> ai agent</strong> that could speed up the construction
+                industry. On the side, i like to lift, play soccer, and play
+                chess(my peak was 2011 lol).
               </p>
             </div>
 
