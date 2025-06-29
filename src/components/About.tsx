@@ -16,7 +16,7 @@ const About: React.FC = () => {
   const skills = [
     {
       category: "Programming Languages",
-      items: ["Python", "TypeScript", "React", "Java"],
+      items: ["Python", "TypeScript", "React"],
     },
     {
       category: "Frameworks & Libraries",
@@ -244,11 +244,19 @@ const About: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} id="about" className="min-h-screen flex items-center">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="min-h-screen flex items-center"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-5xl font-serif font-bold text-cream mb-4">About Me</h2>
-          <p className="text-xl text-cream/80 font-serif">Software Engineer, Mathematician, and Athlete</p>
+          <h2 className="text-5xl font-serif font-bold text-cream mb-4">
+            About Me
+          </h2>
+          <p className="text-xl text-cream/80 font-serif">
+            Heheheha
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
@@ -257,9 +265,10 @@ const About: React.FC = () => {
             <h3 className="text-3xl font-serif text-gold">My Journey</h3>
             <div className="prose prose-invert prose-lg">
               <p className="text-cream/80">
-                I&#39;m a tri-lingual undergraduate at MIT studying Computer Science and Mathematics, with a deep passion for software engineering,
-                quantitative research, and athletics. When I&#39;m not coding or solving mathematical problems,
-                you can find me sprinting, lifting, playing soccer, or playing chess.
+                I&#39;m a tri-lingual undergraduate at MIT studying Computer
+                Science and Mathematics. Right now I am working on couple
+                different things I enjoy, from a black-scholes option trading model to a an ai agent that could speed up the construction industry.
+                On the side, i like to lift, play soccer, and play chess(very washed).
               </p>
             </div>
 
@@ -274,7 +283,9 @@ const About: React.FC = () => {
                     className="bg-dark-accent p-6 rounded-lg border border-cream/10"
                   >
                     <div className="flex justify-between items-start">
-                      <h4 className="text-xl text-cream font-serif">{exp.title}</h4>
+                      <h4 className="text-xl text-cream font-serif">
+                        {exp.title}
+                      </h4>
                       <span className="text-gold/70 text-sm">{exp.date}</span>
                     </div>
                     <p className="text-gold/80">{exp.company}</p>
@@ -287,7 +298,9 @@ const About: React.FC = () => {
 
           {/* Skills Section */}
           <div ref={skillsRef} className="space-y-8">
-            <h3 className="text-3xl font-serif text-gold">Skills & Technologies</h3>
+            <h3 className="text-3xl font-serif text-gold">
+              Skills & Technologies
+            </h3>
             <div className="space-y-8">
               {skills.map((skillGroup, groupIndex) => (
                 <div
@@ -295,7 +308,9 @@ const About: React.FC = () => {
                   ref={addToSkillRefs}
                   className="bg-dark-accent p-6 rounded-lg border border-cream/10"
                 >
-                  <h4 className="text-xl text-cream font-serif mb-4">{skillGroup.category}</h4>
+                  <h4 className="text-xl text-cream font-serif mb-4">
+                    {skillGroup.category}
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {skillGroup.items.map((skill, index) => (
                       <span

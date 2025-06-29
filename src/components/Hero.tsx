@@ -4,40 +4,40 @@ import { useState, useEffect } from 'react';
 
 export default function Hero() {
   const fullName = "Jack\nWang";
-  const fullDescription = "Software Engineer • Developer • Researcher • Athlete";
-  
+  const fullDescription = "I just like learning new things and applying them lol";
+
   const [displayName, setDisplayName] = useState("");
   const [displayDescription, setDisplayDescription] = useState("");
   const [isNameDone, setIsNameDone] = useState(false);
   const [isDescriptionDone, setIsDescriptionDone] = useState(false);
-  
+
   // Effect for typing the name
   useEffect(() => {
     if (displayName === fullName) {
       setIsNameDone(true);
       return;
     }
-    
+
     const timeout = setTimeout(() => {
       setDisplayName(fullName.substring(0, displayName.length + 1));
     }, 150); // Adjust speed as needed
-    
+
     return () => clearTimeout(timeout);
   }, [displayName, fullName]);
-  
+
   // Effect for typing the description after the name is complete
   useEffect(() => {
     if (!isNameDone) return;
-    
+
     if (displayDescription === fullDescription) {
       setIsDescriptionDone(true);
       return;
     }
-    
+
     const timeout = setTimeout(() => {
       setDisplayDescription(fullDescription.substring(0, displayDescription.length + 1));
     }, 75); // Faster typing for description
-    
+
     return () => clearTimeout(timeout);
   }, [displayDescription, fullDescription, isNameDone]);
 
@@ -55,7 +55,7 @@ export default function Hero() {
         </h1>
         <p className="text-2xl text-cream/80 font-serif italic">
           {displayDescription}
-          {!isDescriptionDone && isNameDone && 
+          {!isDescriptionDone && isNameDone &&
             <span className="inline-block animate-blink ml-1">|</span>
           }
         </p>

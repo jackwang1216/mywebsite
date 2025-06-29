@@ -48,7 +48,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Forza New Website...(Coming soon)",
+    title: "Forza New Website...(it's done but not deployed lul)",
     description: "",
     technologies: [],
     link: "#",
@@ -58,13 +58,13 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isHovered, setIsHovered] = useState<number | null>(null);
-  
+
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const projectsContainerRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
-  
+
   // Initialize refs array with the correct length
   useEffect(() => {
     projectRefs.current = Array(projects.length).fill(null);
@@ -73,7 +73,7 @@ const Projects: React.FC = () => {
   useEffect(() => {
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Create a timeline for the section entrance
     const entranceTl = gsap.timeline({
       scrollTrigger: {
@@ -83,12 +83,12 @@ const Projects: React.FC = () => {
         toggleActions: "play none none none"
       }
     });
-    
+
     // Animate the header with a split text effect
     if (headerRef.current) {
       const headerElements = headerRef.current.children;
       gsap.set(headerElements, { opacity: 0, y: 30 });
-      
+
       entranceTl.to(headerElements, {
         opacity: 1,
         y: 0,
@@ -97,7 +97,7 @@ const Projects: React.FC = () => {
         ease: "power3.out"
       });
     }
-    
+
     // Create floating animation for the projects grid
     if (projectsContainerRef.current) {
       gsap.to(projectsContainerRef.current, {
@@ -108,22 +108,22 @@ const Projects: React.FC = () => {
         ease: "sine.inOut"
       });
     }
-    
+
     // Animate each project card with a staggered entrance
     const validProjectRefs = projectRefs.current.filter(ref => ref !== null);
-    
+
     if (validProjectRefs.length > 0) {
-      gsap.set(validProjectRefs, { 
-        opacity: 0, 
+      gsap.set(validProjectRefs, {
+        opacity: 0,
         y: 50,
         scale: 0.9,
-        rotationX: 5 
+        rotationX: 5
       });
-      
+
       // Create scroll-triggered animations for each project
       validProjectRefs.forEach((ref, index) => {
         if (!ref) return;
-        
+
         // Create a timeline for each project card
         const cardTl = gsap.timeline({
           scrollTrigger: {
@@ -133,7 +133,7 @@ const Projects: React.FC = () => {
             toggleActions: "play none none reverse"
           }
         });
-        
+
         // Animate the card entrance
         cardTl.to(ref, {
           opacity: 1,
@@ -144,11 +144,11 @@ const Projects: React.FC = () => {
           delay: index * 0.1,
           ease: "back.out(1.7)"
         });
-        
+
         // Add hover animations for each project card
         const addHoverEffects = () => {
           if (!ref) return;
-          
+
           ref.addEventListener('mouseenter', () => {
             if (!gsap.isTweening(ref)) {
               gsap.to(ref, {
@@ -159,7 +159,7 @@ const Projects: React.FC = () => {
                 duration: 0.4,
                 ease: "power2.out"
               });
-              
+
               // Animate the title color
               const title = ref.querySelector('h3');
               if (title) {
@@ -168,7 +168,7 @@ const Projects: React.FC = () => {
                   duration: 0.3
                 });
               }
-              
+
               // Animate technology tags
               const tags = ref.querySelectorAll('.bg-dark');
               gsap.to(tags, {
@@ -179,7 +179,7 @@ const Projects: React.FC = () => {
               });
             }
           });
-          
+
           ref.addEventListener('mouseleave', () => {
             if (!gsap.isTweening(ref)) {
               gsap.to(ref, {
@@ -190,7 +190,7 @@ const Projects: React.FC = () => {
                 duration: 0.4,
                 ease: "power2.out"
               });
-              
+
               // Reset title color
               const title = ref.querySelector('h3');
               if (title) {
@@ -199,7 +199,7 @@ const Projects: React.FC = () => {
                   duration: 0.3
                 });
               }
-              
+
               // Reset technology tags
               const tags = ref.querySelectorAll('.bg-dark');
               gsap.to(tags, {
@@ -211,37 +211,37 @@ const Projects: React.FC = () => {
             }
           });
         };
-        
+
         // Add hover effects after a short delay to ensure the DOM is ready
         setTimeout(addHoverEffects, 100);
       });
     }
-    
+
     // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
-  
+
   // Set up ref callback function to store refs
   const setProjectRef = (el: HTMLDivElement | null, index: number) => {
     projectRefs.current[index] = el;
   };
-  
+
   // Handle modal animations when a project is selected
   useEffect(() => {
     if (selectedProject && modalRef.current) {
       // Create an entrance animation for the modal
       gsap.fromTo(modalRef.current,
         { scale: 0.8, opacity: 0 },
-        { 
-          scale: 1, 
-          opacity: 1, 
-          duration: 0.5, 
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
           ease: "back.out(1.7)"
         }
       );
-      
+
       // Create a subtle floating animation for the modal
       gsap.to(modalRef.current, {
         y: 10,
@@ -250,15 +250,15 @@ const Projects: React.FC = () => {
         yoyo: true,
         ease: "sine.inOut"
       });
-      
+
       // Animate modal content
       const modalContent = modalRef.current.children;
       gsap.fromTo(modalContent,
         { y: 20, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.5, 
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
           stagger: 0.1,
           delay: 0.2,
           ease: "power3.out"
@@ -266,7 +266,7 @@ const Projects: React.FC = () => {
       );
     }
   }, [selectedProject]);
-  
+
   // Handle modal close animation
   const closeModal = () => {
     if (modalRef.current) {
@@ -290,8 +290,8 @@ const Projects: React.FC = () => {
           <p className="text-xl text-cream/80 font-serif">Some of my recent work</p>
         </div>
 
-        <div 
-          ref={projectsContainerRef} 
+        <div
+          ref={projectsContainerRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {projects.map((project, index) => (
