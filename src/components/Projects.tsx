@@ -48,6 +48,14 @@ const projects: Project[] = [
   },
   {
     id: 4,
+    title: "Black-Scholes Option Pricing Model",
+    description:
+      "Not just a model that utilizes the Black-Scholes Model, but also showing heatmaps of the model and P&L as well. Planning on implementing an anlysis(Greeks) based on theoretical values and real market values as well.",
+    technologies: ["Python", "Mathematics"],
+    link: "https://github.com/jackwang1216/Black-Sholes",
+  },
+  {
+    id: 5,
     title: "Forza New Website...(it's done but not deployed lul)",
     description: "",
     technologies: [],
