@@ -264,11 +264,11 @@ const About: React.FC = () => {
             <div className="prose prose-invert prose-lg">
               <p className="text-cream/80">
                 I&#39;m a tri-lingual undergraduate at MIT studying Computer
-                Science and Mathematics. Right now I am working on couple
+                Science and Mathematics. Right now, I am working on couple
                 different things I enjoy, from a{" "}
-                <strong>black-scholes option trading model</strong> to an
+                <strong>black-scholes option trading model</strong> with many features to an
                 <strong> ai agent</strong> that could speed up the construction
-                industry. On the side, i like to lift, play soccer, and play
+                industry. On the side, I like to lift, play soccer, and play
                 chess(my peak was 2011 lol).
               </p>
             </div>
