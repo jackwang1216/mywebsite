@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
-import BackgroundEffect from "@/components/BackgroundEffect";
 import ScrollToTop from "@/components/ScrollToTop";
 import GSAPProvider from "@/components/GSAPProvider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -37,7 +36,6 @@ export default function RootLayout({
       <body className="relative">
         <GSAPProvider>
           <ScrollToTop />
-          <BackgroundEffect />
           <main className="relative z-10">{children}</main>
         </GSAPProvider>
       </body>
