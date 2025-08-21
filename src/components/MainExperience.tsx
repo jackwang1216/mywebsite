@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import DomePortal from './DomePortal';
 import Terminal from './Terminal';
-import ProjectsRoom from './rooms/ProjectsRoom';
-import ResumeRoom from './rooms/About';
-import GalleryRoom from './rooms/GalleryRoom';
-import ContactRoom from './rooms/ContactRoom';
+import ProjectsPage from './ProjectsPage';
+import AboutPage from './AboutPage';
+import GalleryPage from './GalleryPage';
+import ContactPage from './ContactPage';
 
 export type ExperienceState = 'dome' | 'terminal' | 'room';
 export type RoomType = 'projects' | 'resume' | 'gallery' | 'contact' | 'blog';
@@ -111,16 +111,16 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
             className="w-full min-h-screen"
           >
             {currentRoom === 'projects' && (
-              <ProjectsRoom onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
+              <ProjectsPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
             )}
             {currentRoom === 'resume' && (
-              <ResumeRoom onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
+              <AboutPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
             )}
             {currentRoom === 'gallery' && (
-              <GalleryRoom onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
+              <GalleryPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
             )}
             {currentRoom === 'contact' && (
-              <ContactRoom onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
+              <ContactPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
             )}
             {currentRoom === 'blog' && (
               <div className="h-full w-full flex items-center justify-center bg-black">

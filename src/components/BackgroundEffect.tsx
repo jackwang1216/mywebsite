@@ -48,15 +48,16 @@ const themeConfigs = {
   }
 };
 
-export default function BackgroundEffect({
-  theme,
-  particleColor,
-  secondaryColor,
-  particleCount,
-  connectionDistance,
-  particleSpeed,
-  interactive = false
-}: BackgroundEffectProps = {}) {
+export default function BackgroundEffect(props: BackgroundEffectProps) {
+  const {
+    theme,
+    particleColor,
+    secondaryColor,
+    particleCount,
+    connectionDistance,
+    particleSpeed,
+    interactive = false
+  } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   // Use theme config or custom props
@@ -76,16 +77,137 @@ export default function BackgroundEffect({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
-    const updateSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    // Particle system (defined before usage to avoid TDZ issues)
+    class ParticleImpl {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      color: string;
+      hue: number;
+      pulsePhase: number;
+      targetX?: number;
+      targetY?: number;
+
+      constructor(width: number, height: number) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * config.particleSpeed;
+        this.vy = (Math.random() - 0.5) * config.particleSpeed;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.hue = Math.random() * 360;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        if (theme === 'gallery') {
+          const r = Math.sin(this.hue * 0.01745) * 127 + 128;
+          const g = Math.sin((this.hue + 120) * 0.01745) * 127 + 128;
+          const b = Math.sin((this.hue + 240) * 0.01745) * 127 + 128;
+          this.color = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${Math.random() * 0.6 + 0.3})`;
+        } else {
+          const mixFactor = Math.random();
+          const r = Math.floor(config.particleColor.r * (1 - mixFactor) + config.secondaryColor.r * mixFactor);
+          const g = Math.floor(config.particleColor.g * (1 - mixFactor) + config.secondaryColor.g * mixFactor);
+          const b = Math.floor(config.particleColor.b * (1 - mixFactor) + config.secondaryColor.b * mixFactor);
+          this.color = `rgba(${r}, ${g}, ${b}, ${Math.random() * 0.7 + 0.2})`;
+        }
+      }
+
+      update(width: number, height: number) {
+        if (config.interactive) {
+          const dx = mouseX - this.x;
+          const dy = mouseY - this.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 150) {
+            const force = (150 - distance) / 150 * 0.001;
+            this.vx += dx * force;
+            this.vy += dy * force;
+          }
+        }
+        this.x += this.vx;
+        this.y += this.vy;
+        if (theme === 'gallery') {
+          this.pulsePhase += 0.02;
+          this.hue += 0.5;
+          if (this.hue > 360) this.hue = 0;
+          const r = Math.sin(this.hue * 0.01745) * 127 + 128;
+          const g = Math.sin((this.hue + 120) * 0.01745) * 127 + 128;
+          const b = Math.sin((this.hue + 240) * 0.01745) * 127 + 128;
+          const alpha = Math.sin(this.pulsePhase) * 0.3 + 0.5;
+          this.color = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${alpha})`;
+        }
+        if (config.interactive) {
+          this.vx *= 0.99;
+          this.vy *= 0.99;
+        }
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.beginPath();
+        if (theme === 'gallery') {
+          const glowSize = Math.max(0.1, this.size + Math.sin(this.pulsePhase) * 1);
+          ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 10;
+          ctx.arc(this.x, this.y, Math.max(0.1, this.size * 0.5), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        } else if (theme === 'projects') {
+          const pulse = Math.sin(Date.now() * 0.003 + this.x * 0.01) * 0.5 + 1;
+          ctx.arc(this.x, this.y, Math.max(0.1, this.size * pulse), 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        } else {
+          ctx.arc(this.x, this.y, Math.max(0.1, this.size), 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+      }
+    }
+
+    const getParams = () => {
+      const isMobile = window.innerWidth <= 768;
+      return {
+        finalParticleCount: isMobile ? Math.floor(config.particleCount * 0.6) : config.particleCount,
+        finalConnectionDistance: isMobile ? config.connectionDistance * 0.75 : config.connectionDistance,
+      };
     };
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    const handleVisibilityOrFocus = () => updateSize();
-    window.addEventListener('focus', handleVisibilityOrFocus);
-    document.addEventListener('visibilitychange', handleVisibilityOrFocus);
+
+    const setCanvasSize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const cssWidth = window.innerWidth;
+      const cssHeight = window.innerHeight;
+      canvas.style.width = cssWidth + 'px';
+      canvas.style.height = cssHeight + 'px';
+      const needResize = canvas.width !== Math.floor(cssWidth * dpr) || canvas.height !== Math.floor(cssHeight * dpr);
+      if (needResize) {
+        canvas.width = Math.floor(cssWidth * dpr);
+        canvas.height = Math.floor(cssHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      return needResize;
+    };
+
+    let particles: ParticleImpl[] = [];
+    let { finalParticleCount, finalConnectionDistance } = getParams();
+
+    const seedParticles = () => {
+      particles = [];
+      ({ finalParticleCount, finalConnectionDistance } = getParams());
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      for (let i = 0; i < finalParticleCount; i++) {
+        particles.push(new ParticleImpl(width, height));
+      }
+    };
+
+    setCanvasSize();
+    seedParticles();
 
     // Mouse interaction
     let mouseX = canvas.width / 2;
@@ -215,24 +337,23 @@ export default function BackgroundEffect({
       }
     }
 
-    // Create particles
-    const particles: Particle[] = [];
-    const isMobile = window.innerWidth <= 768;
-    const finalParticleCount = isMobile ? Math.floor(config.particleCount * 0.6) : config.particleCount;
-    const finalConnectionDistance = isMobile ? config.connectionDistance * 0.75 : config.connectionDistance;
-    
-    for (let i = 0; i < finalParticleCount; i++) {
-      particles.push(new Particle(canvas.width, canvas.height));
+    function updateSize() {
+      const resized = setCanvasSize();
+      if (resized) seedParticles();
     }
+
+    const handleVisibilityOrFocus = () => updateSize();
+    window.addEventListener('resize', updateSize);
+    window.addEventListener('focus', handleVisibilityOrFocus);
+    window.addEventListener('blur', handleVisibilityOrFocus);
+    document.addEventListener('visibilitychange', handleVisibilityOrFocus);
 
     // Animation loop
     function animate() {
       if (!ctx || !canvas) return;
 
-      // Keep canvas size in sync with viewport at runtime (handles OS popups)
-      if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+      if (setCanvasSize()) {
+        seedParticles();
       }
 
       // Clear canvas with themed background
@@ -291,9 +412,10 @@ export default function BackgroundEffect({
     return () => {
       window.removeEventListener('resize', updateSize);
       window.removeEventListener('focus', handleVisibilityOrFocus);
+      window.removeEventListener('blur', handleVisibilityOrFocus);
       document.removeEventListener('visibilitychange', handleVisibilityOrFocus);
     };
-  }, []);
+  }, [theme, config.particleColor, config.secondaryColor, config.particleCount, config.connectionDistance, config.particleSpeed, config.interactive]);
 
   return (
     <canvas
@@ -302,6 +424,7 @@ export default function BackgroundEffect({
       style={{
         pointerEvents: 'none',
         background: '#111111',
+        transform: 'translateZ(0)'
       }}
     />
   );

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import TerminalPopup from '../TerminalPopup';
-import BackgroundEffect from '../../BackgroundEffect';
+import TerminalPopup from './TerminalPopup';
+import BackgroundEffect from './BackgroundEffect';
 
 // Resume data updated from resume.md and existing data
 const resumeData = {

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import TerminalPopup from '../TerminalPopup';
-import BackgroundEffect from '../../BackgroundEffect';
+import TerminalPopup from './TerminalPopup';
+import BackgroundEffect from './BackgroundEffect';
 
 interface GalleryItem {
   id: number;
@@ -76,12 +76,12 @@ const galleryItems: GalleryItem[] = [
   }
 ];
 
-interface GalleryRoomProps {
+interface GalleryPageProps {
   onBack: () => void;
   onNavigate?: (destination: string) => void;
 }
 
-export default function GalleryRoom({ onBack, onNavigate }: GalleryRoomProps) {
+export default function GalleryPage({ onBack, onNavigate }: GalleryPageProps) {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [showTerminal, setShowTerminal] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'masonry'>('grid');
@@ -103,8 +103,6 @@ export default function GalleryRoom({ onBack, onNavigate }: GalleryRoomProps) {
     } else if (cmd === 'slideshow') {
       setSlideshow(true);
       setCurrentSlideIndex(0);
-    } else if (cmd === 'grid') {
-      setViewMode('grid');
     } else if (cmd === 'masonry') {
       setViewMode('masonry');
     }
@@ -447,7 +445,7 @@ export default function GalleryRoom({ onBack, onNavigate }: GalleryRoomProps) {
         <div className="mt-12 text-center text-gray-400 text-sm">
           <p>
             Showing {filteredItems.length} of {galleryItems.length} items •
-            Click any item to view • Press <kbd className="px-2 py-1 bg-gray-800 rounded">\`</kbd> for terminal commands
+            Click any item to view • Press <kbd className="px-2 py-1 bg-gray-800 rounded">`</kbd> for terminal commands
           </p>
         </div>
       </div>

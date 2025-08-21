@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import TerminalPopup from '../TerminalPopup';
-import BackgroundEffect from '../../BackgroundEffect';
+import TerminalPopup from './TerminalPopup';
+import BackgroundEffect from './BackgroundEffect';
 
 interface Project {
   id: number;
@@ -71,12 +71,12 @@ const projects: Project[] = [
   }
 ];
 
-interface ProjectsRoomProps {
+interface ProjectsPageProps {
   onBack: () => void;
   onNavigate?: (destination: string) => void;
 }
 
-export default function ProjectsRoom({ onBack, onNavigate }: ProjectsRoomProps) {
+export default function ProjectsPage({ onBack, onNavigate }: ProjectsPageProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showTerminal, setShowTerminal] = useState(false);
   const [filter, setFilter] = useState<string>('');

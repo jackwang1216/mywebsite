@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import TerminalPopup from '../TerminalPopup';
-import BackgroundEffect from '../../BackgroundEffect';
+import TerminalPopup from './TerminalPopup';
+import BackgroundEffect from './BackgroundEffect';
 
 interface ContactInfo {
   email: string;
@@ -307,7 +307,6 @@ export default function ContactRoom({ onBack, onNavigate }: ContactRoomProps) {
       >
         {/* Animated Background */}
         <BackgroundEffect theme="contact" />
-        <div className="fixed inset-0 -z-10" aria-hidden="true"></div>
         {/* Header */}
         <div className="container mx-auto px-6 py-12 relative z-10">
           <div className="flex items-center justify-between mb-12">

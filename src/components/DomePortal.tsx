@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import MITProjection from './MITProjection';
-import GlitchText from '../GlitchText';
+import GlitchText from './GlitchText';
 
 
 // Typing animation hook

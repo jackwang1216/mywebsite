@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import GlitchText from '../GlitchText';
+import GlitchText from './GlitchText';
 
 interface TerminalProps {
   onNavigate: (destination: string) => void;
