@@ -86,7 +86,6 @@ export default function GalleryPage({ onBack, onNavigate }: GalleryPageProps) {
   const [showTerminal, setShowTerminal] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'masonry'>('grid');
   const [filter, setFilter] = useState<'all' | 'images' | 'videos'>('all');
-  const [isLoading, setIsLoading] = useState(false);
   const [slideshow, setSlideshow] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 

@@ -78,11 +78,11 @@ export default function TerminalPopup({
       case 'gallery':
         return getGalleryCommands(cmd, args);
       case 'contact':
-        return getContactCommands(cmd, args);
+        return getContactCommands(cmd);
       case 'resume':
-        return getResumeCommands(cmd, args);
+        return getResumeCommands(cmd);
       case 'blog':
-        return getBlogCommands(cmd, args);
+        return getBlogCommands(cmd);
       default:
         return [`Command not found: ${cmd}. Type 'help' for available commands.`];
     }
@@ -199,7 +199,7 @@ export default function TerminalPopup({
     }
   };
 
-  const getContactCommands = (cmd: string, args: string[]): string[] => {
+  const getContactCommands = (cmd: string): string[] => {
     switch (cmd) {
       case 'info':
         return [
@@ -221,7 +221,7 @@ export default function TerminalPopup({
     }
   };
 
-  const getResumeCommands = (cmd: string, args: string[]): string[] => {
+  const getResumeCommands = (cmd: string): string[] => {
     switch (cmd) {
       case 'ls':
         return [
@@ -238,7 +238,7 @@ export default function TerminalPopup({
     }
   };
 
-  const getBlogCommands = (cmd: string, args: string[]): string[] => {
+  const getBlogCommands = (cmd: string): string[] => {
     switch (cmd) {
       case 'ls':
         return ['No blog posts available yet...', ''];

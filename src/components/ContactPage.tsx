@@ -95,7 +95,7 @@ const ContactFormModal = ({
           <div className="text-center py-8">
             <div className="text-green-400 text-6xl mb-4">✓</div>
             <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
-            <p className="text-gray-300">Thanks for reaching out. I'll get back to you soon!</p>
+            <p className="text-gray-300">Thanks for reaching out. I&apos;ll get back to you soon!</p>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="space-y-6">
@@ -216,7 +216,7 @@ export default function ContactRoom({ onBack, onNavigate }: ContactRoomProps) {
 
   // Handle terminal commands
   const handleTerminalCommand = (command: string) => {
-    const [cmd, ...args] = command.toLowerCase().split(' ');
+    const [cmd] = command.toLowerCase().split(' ');
     
     if (cmd === 'send' || cmd === 'compose' || cmd === 'message') {
       openContactForm();
@@ -274,7 +274,7 @@ export default function ContactRoom({ onBack, onNavigate }: ContactRoomProps) {
       setSubmitStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setShowContactForm(false), 1000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -393,9 +393,9 @@ export default function ContactRoom({ onBack, onNavigate }: ContactRoomProps) {
               <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/50 p-8">
                 <div className="text-center mb-8">
                   <div className="text-6xl mb-4">💬</div>
-                  <h3 className="text-2xl font-semibold text-white mb-2">Let's Chat!</h3>
+                  <h3 className="text-2xl font-semibold text-white mb-2">Let&apos;s Chat!</h3>
                   <p className="text-gray-300 mb-6">
-                    Whether it's about work, projects, or just to say hello - I'd love to hear from you!
+                    Whether it&apos;s about work, projects, or just to say hello - I&apos;d love to hear from you!
                   </p>
                   
                   <button
