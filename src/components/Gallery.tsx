@@ -156,7 +156,7 @@ export default function Gallery() {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       ScrollTrigger.clearMatchMedia();
     };
-  }, []);  // Using empty dependency array since galleryItems is constant
+  }, [galleryItems]);
 
   // Function to handle hover for videos
   const handleMouseEnter = (index: number) => {

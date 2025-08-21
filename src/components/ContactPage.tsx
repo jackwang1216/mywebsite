@@ -313,7 +313,7 @@ export default function ContactRoom({ onBack, onNavigate }: ContactRoomProps) {
             <div className="backdrop-blur-sm bg-gray-900/30 p-6 rounded-xl border border-gray-700/30">
               <h1 className="text-5xl font-bold text-white mb-4">Get In Touch</h1>
               <p className="text-xl text-gray-300">
-                Let's connect! I'm always open to discussing new opportunities
+                Let&apos;s connect! I&apos;m always open to discussing new opportunities
               </p>
             </div>
             

@@ -239,7 +239,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           setChatMode(true);
           setChatMessages([{
             id: '1',
-            text: "Hi! I'm jack.ai 🦫\n\nI'm Jack's AI assistant and can help you learn more about his journey, projects, and experiences. What would you like to know?\n\nType 'exit' to return to terminal.",
+            text: "Hi! I\'m jack.ai 🦫\n\nI\'m Jack\'s AI assistant and can help you learn more about his journey, projects, and experiences. What would you like to know?\n\nType \'exit\' to return to terminal.",
             sender: 'beaver',
             timestamp: new Date()
           }]);
@@ -473,9 +473,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
                 <span>🦫</span>
                 <span className="font-bold">jack.ai - Interactive Chat Mode</span>
               </div>
-              <div className="text-xs text-green-400/60 mt-1">
-                Type 'exit' to return to terminal
-              </div>
+              <div className="text-xs text-green-400/60 mt-1">Type &apos;exit&apos; to return to terminal</div>
             </div>
             
             <AnimatePresence>

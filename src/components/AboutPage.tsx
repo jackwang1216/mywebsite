@@ -224,7 +224,7 @@ export default function About({ onBack, onNavigate }: AboutProps) {
                   </div>
                   <div className="md:col-span-2">
                     <p className="text-gray-300 leading-relaxed mb-4 text-sm">
-                      I'm a computer science and mathematics student at MIT with a passion for software engineering
+                      I&apos;m a computer science and mathematics student at MIT with a passion for software engineering
                       and problem-solving. Born in Japan, raised in China and Iowa, I bring a global perspective
                       to technology and innovation.
                     </p>
@@ -409,9 +409,7 @@ export default function About({ onBack, onNavigate }: AboutProps) {
                   ))}
                 </div>
                 <div className="mt-4 p-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg border border-purple-400/20">
-                  <p className="text-center text-gray-300 text-sm italic">
-                  "失败是成功之母"
-                  </p>
+                  <p className="text-center text-gray-300 text-sm italic">失败是成功之母</p>
                 </div>
               </div>
             </section>
