@@ -186,50 +186,6 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           ''
         ];
       
-      case 'fortune':
-        const fortunes = [
-          'Jack can solve a Rubik\'s cube in under 2 minutes!',
-          'He\'s lived on 3 different continents before turning 20.',
-          'Jack built his first AI chatbot at age 16.',
-          'He speaks English, Mandarin, and is learning Japanese.',
-          'Jack\'s favorite debugging technique: rubber duck programming.',
-          'He once stayed up 36 hours straight to finish a hackathon project.',
-          'Jack\'s go-to snack while coding: green tea and pocky sticks.',
-          'He dreams of building technology that makes the world more connected.',
-          'Jack\'s coding playlist has over 500 lo-fi hip-hop tracks.',
-          'He believes the best code is code that doesn\'t need comments.',
-        ];
-        return [
-          'Random Fun Fact:',
-          '',
-          fortunes[Math.floor(Math.random() * fortunes.length)],
-          ''
-        ];
-      
-      case 'motd':
-        const today = new Date();
-        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
-        const motds = [
-          'Welcome to Jack\'s personal terminal! 🚀',
-          'Currently building the future, one line of code at a time.',
-          'Debugging is like being a detective in a crime movie where you are also the murderer.',
-          'MIT: Where impossible problems become merely difficult.',
-          'Remember: Code is poetry written for machines and humans alike.',
-          'Today\'s challenge: Turn caffeine into code.',
-          'The best error message is the one that never shows up.',
-          'Building bridges between cultures through technology.',
-          'Learning never stops at MIT - embrace the journey!',
-          'Making the complex simple, one algorithm at a time.',
-        ];
-        return [
-          `Message of the Day (${today.toDateString()}):`,
-          '',
-          motds[dayOfYear % motds.length],
-          '',
-          'Type "help" to explore available commands.',
-          ''
-        ];
-      
       case 'clear':
         return [];
       
@@ -264,8 +220,6 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           '  skills               - Technical skills & expertise',  
           '  education            - MIT academic details',
           '  history              - Life journey (Japan→China→Iowa→MIT)',
-          '  fortune              - Random fun fact about Jack',
-          '  motd                 - Message of the day',
           '',
           'Interactive Features:',
           '  beaver               - Chat with jack.ai assistant 🦫',
@@ -435,7 +389,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
       // Auto-complete suggestions
       const suggestions = chatMode 
         ? ['exit', 'quit']
-        : ['help', 'ls', 'cd', 'open', 'clear', 'pwd', 'whoami', 'skills', 'education', 'history', 'fortune', 'beaver'];
+        : ['help', 'ls', 'cd', 'open', 'clear', 'pwd', 'whoami', 'skills', 'education', 'history', 'beaver'];
       const matches = suggestions.filter(cmd => cmd.startsWith(input.toLowerCase()));
       if (matches.length === 1) {
         setInput(matches[0]);
