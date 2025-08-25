@@ -84,7 +84,7 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
             transition={{ duration: 1, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <DomePortal onEnterCorridor={handleEnterTerminal} />
+            <DomePortal onEnterCorridor={handleEnterTerminal} onGoToResume={() => handleNavigate('resume')} />
           </motion.div>
         )}
 
