@@ -5,7 +5,7 @@ Software engineer and robotics enthusiast with experience in full-stack developm
 
 ## Education
 ### Massachusetts Institute of Technology (MIT)
-**Bachelor of Science** | Mathematics and Computer Science | 2023 - Present
+**Bachelor of Science** | Mathematics and Computer Science | 2024 - Present
 - Currently studying at MIT, one of the world's leading institutions for technology and engineering
 - Focus areas include artificial intelligence, machine learning, and computational mathematics
 - Actively involved in research and project-based learning
@@ -14,8 +14,10 @@ Software engineer and robotics enthusiast with experience in full-stack developm
 
 ### Truewind (YC W23)
 **Software Engineer Intern** | Summer 2025 (June - September)
-- Incoming Software Engineer Intern for summer 2025
-- Will be working on software engineering projects at this Y Combinator startup
+ - Developed and maintained full-stack features for a fintech platform using Next.js, Typescript, and tRPC for type-safe API communication.
+ - Designed and built Truewind’s first Autonomous AI agent from scratch, introducing an agentic workflow that orchestrates tool use for
+accounting automation.
+ - Developed core infrastructure for the Model Context Protocol (MCP), enabling modular tool integration and dynamic context management within AI agents.
 
 ### MIT Sloan School of Management, Cambridge, MA
 **Quantitative Researcher** | November 2024 - May 2025
@@ -24,7 +26,7 @@ Software engineer and robotics enthusiast with experience in full-stack developm
 - Analyzed discrepancies between time-series and cross-sectional regressions in empirical asset pricing by proving theoretical conditions for equivalence and conducting large-scale financial data experiments
 
 ### Forza, Seattle, WA
-**Software Engineer** | July 2024 - Present
+**Software Engineer** | July 2024 - May 2025
 - Currently working on the company's website, improving user experience and increasing client engagement by implementing responsive UI/UX and optimizing performance, utilizing React/Typescript, Tailwind CSS, and more
 - Built and managed internal software solutions to streamline project management, automate reporting, and enhance communication between construction teams
 

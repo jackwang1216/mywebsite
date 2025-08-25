@@ -63,7 +63,7 @@ function InitialLandingText() {
 
 
 // Main Portal Component
-export default function DomePortal({ onEnterCorridor }: { onEnterCorridor: () => void }) {
+export default function DomePortal({ onEnterCorridor, onGoToResume }: { onEnterCorridor: () => void; onGoToResume: () => void }) {
   const [portalState, setPortalState] = useState<'initial' | 'opening' | 'opened'>('initial');
   const [isHovered, setIsHovered] = useState(false);
   const OPEN_DELAY_MS = 500; // half-second blackout
@@ -87,13 +87,27 @@ export default function DomePortal({ onEnterCorridor }: { onEnterCorridor: () =>
       <div className="h-screen w-full relative overflow-hidden bg-black flex items-center justify-center">
         <div className="text-center">
           <InitialLandingText />
-          
-          <button
-            onClick={handleOpenPortal}
-            className="bg-transparent border border-cyan/60 text-cyan px-6 py-3 text-sm font-mono hover:bg-cyan/10 hover:border-cyan transition-all duration-300 rounded backdrop-blur-sm"
-          >
-            INITIALIZE_PORTAL.EXE
-          </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              onClick={handleOpenPortal}
+              aria-label="Initialize portal"
+              className="bg-transparent border border-cyan/60 text-cyan px-6 py-3 text-sm font-mono hover:bg-cyan/10 hover:border-cyan transition-all duration-300 rounded backdrop-blur-sm"
+            >
+              INITIALIZE_PORTAL.EXE
+            </button>
+            <div className="relative group">
+              <button
+                onClick={onGoToResume}
+                aria-label="View resume"
+                className="bg-transparent border border-purple-400/60 text-purple-400 px-6 py-3 text-sm font-mono hover:bg-purple-400/10 hover:border-purple-400 transition-all duration-300 rounded backdrop-blur-sm"
+              >
+                VIEW_RESUME
+              </button>
+              <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 border border-purple-400/60 text-purple-200 rounded px-2 py-1 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                Click me for shortcut!
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

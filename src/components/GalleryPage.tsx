@@ -11,7 +11,6 @@ interface GalleryItem {
   src: string;
   alt: string;
   description?: string;
-  size?: string;
   thumbnail?: string;
 }
 
@@ -21,40 +20,35 @@ const galleryItems: GalleryItem[] = [
     type: "image", 
     src: "/professional.jpeg", 
     alt: "Professional picture",
-    description: "Professional Jack lul",
-    size: "2.3MB"
+    description: "Professional Jack lul"
   },
   { 
     id: 2,
     type: "image", 
     src: "/mom_and_I.jpeg", 
     alt: "Mom and I",
-    description: "my mom",
-    size: "1.8MB"
+    description: "my mom"
   },
   { 
     id: 3,
     type: "image", 
     src: "/Aria_me.jpeg", 
     alt: "With Aria",
-    description: "Casual photo with Aria",
-    size: "2.1MB"
+    description: "Casual photo with Aria"
   },
   { 
     id: 4,
     type: "image", 
     src: "/governer.jpeg", 
     alt: "With Iowa Governor",
-    description: "Meeting with Iowa Governor",
-    size: "1.9MB"
+    description: "Meeting with Iowa Governor"
   },
   { 
     id: 5,
     type: "image", 
     src: "/jerry_me.jpeg", 
     alt: "With friend Jerry",
-    description: "Photo with my friend Jerry",
-    size: "2.0MB"
+    description: "Photo with my friend Jerry"
   },
   {
     id: 6,
@@ -62,8 +56,7 @@ const galleryItems: GalleryItem[] = [
     src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284035/jackwang-gallery/drake_4x4.mp4",
     alt: "Drake 4x4 Relay",
     description: "Track and field relay race at Drake University",
-    thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg",
-    size: "12.5MB"
+    thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284035/jackwang-gallery/drake_4x4.jpg"
   },
   {
     id: 7,
@@ -71,8 +64,7 @@ const galleryItems: GalleryItem[] = [
     src: "https://res.cloudinary.com/dmbdb2f2p/video/upload/q_auto,f_auto/v1743284043/jackwang-gallery/indoor_open_4.mp4",
     alt: "Indoor state Open 4",
     description: "Indoor track state championship race",
-    thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg",
-    size: "15.2MB"
+    thumbnail: "https://res.cloudinary.com/dmbdb2f2p/video/upload/so_0/v1743284043/jackwang-gallery/indoor_open_4.jpg"
   }
 ];
 
@@ -191,7 +183,7 @@ export default function GalleryPage({ onBack, onNavigate }: GalleryPageProps) {
               }`}>
                 {selectedItem.type.toUpperCase()}
               </span>
-              <span>{selectedItem.size}</span>
+              
               {slideshow && (
                 <span className="text-yellow-400">Slideshow Mode</span>
               )}
@@ -423,8 +415,7 @@ export default function GalleryPage({ onBack, onNavigate }: GalleryPageProps) {
                       </p>
                     )}
                     
-                    <div className="flex items-center justify-between text-sm text-gray-400">
-                      <span>{item.size}</span>
+                    <div className="flex items-center justify-end text-sm text-gray-400">
                       <div className="flex items-center space-x-1 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>View</span>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

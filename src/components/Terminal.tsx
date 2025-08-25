@@ -21,7 +21,15 @@ interface HistoryEntry {
   timestamp: Date;
 }
 
+declare global {
+  interface Window {
+    __JW_TERMINAL_BOOTED__?: boolean;
+  }
+}
+
 export default function Terminal({ onNavigate }: TerminalProps) {
+  const hasBootedThisLoad = typeof window !== 'undefined' && window.__JW_TERMINAL_BOOTED__ === true;
+
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([
     {
@@ -45,8 +53,8 @@ export default function Terminal({ onNavigate }: TerminalProps) {
   const [chatMode, setChatMode] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [isLoadingChat, setIsLoadingChat] = useState(false);
-  const [showInput, setShowInput] = useState(false);
-  const [isFirstBoot, setIsFirstBoot] = useState(true);
+  const [showInput, setShowInput] = useState<boolean>(hasBootedThisLoad);
+  const [isFirstBoot, setIsFirstBoot] = useState<boolean>(!hasBootedThisLoad);
   
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
@@ -54,16 +62,16 @@ export default function Terminal({ onNavigate }: TerminalProps) {
   // Show input after initialization completes (only if first boot)
   useEffect(() => {
     if (isFirstBoot) {
-      // Calculate total delay: 8 lines (including empty ones) * 400ms + buffer for glitch animation
-      const initializationDelay = 8 * 400 + 1000; // 4200ms total
+      const initializationDelay = 8 * 400 + 1000;
       const timer = setTimeout(() => {
         setShowInput(true);
-        setIsFirstBoot(false); // Mark that we've completed first boot
+        setIsFirstBoot(false);
+        if (typeof window !== 'undefined') {
+          window.__JW_TERMINAL_BOOTED__ = true;
+        }
       }, initializationDelay);
-
       return () => clearTimeout(timer);
     } else {
-      // For subsequent visits, show input immediately
       setShowInput(true);
     }
   }, [isFirstBoot]);
