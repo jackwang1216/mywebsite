@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface TerminalPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  context: 'projects' | 'resume' | 'gallery' | 'contact' | 'blog';
+  context: 'projects' | 'about' | 'gallery' | 'contact' | 'blog';
   onCommand?: (command: string) => void;
   onNavigate?: (destination: string) => void;
 }
@@ -63,7 +63,6 @@ export default function TerminalPopup({
       'clear': [],
       'exit': ['Closing terminal...'],
       'back': ['Returning to main terminal...'],
-      'pwd': [`/home/jackwang/${context}`],
       'cd': [], // Will be handled in handleSubmit for 'cd ..'
       '': []
     };
@@ -72,180 +71,53 @@ export default function TerminalPopup({
       return baseCommands[cmd as keyof typeof baseCommands];
     }
 
-    switch (context) {
-      case 'projects':
-        return getProjectsCommands(cmd, args);
-      case 'gallery':
-        return getGalleryCommands(cmd, args);
-      case 'contact':
-        return getContactCommands(cmd);
-      case 'resume':
-        return getResumeCommands(cmd);
-      case 'blog':
-        return getBlogCommands(cmd);
-      default:
-        return [`Command not found: ${cmd}. Type 'help' for available commands.`];
+    // Only handle view command for projects
+    if (cmd === 'view') {
+      return getProjectsCommands(cmd, args);
     }
+
+    return [`Command not found: ${cmd}. Type 'help' for available commands.`];
   };
 
   const getHelpText = (): string[] => {
-    const common = [
-      `${context.toUpperCase()} TERMINAL COMMANDS`,
-      '=' + '='.repeat(context.length + 18),
+    return [
+      'TERMINAL COMMANDS',
+      '================',
       '',
-      'Common Commands:',
+      'Available Commands:',
       '  help         - Show this help',
       '  clear        - Clear terminal',
-      '  back         - Return to main terminal',
       '  cd ..        - Go back to main terminal',
-      '  exit         - Close terminal popup'
+      '  view <id>    - View project details',
+      '',
+      'Projects:',
+      '  [1] Boldly - Comfort zone expansion app',
+      '  [2] Multilevel Factor - Quantitative research',
+      '  [3] Simplify.ai - AI accessibility tool',
+      '  [4] Black-Scholes - Financial modeling',
+      '  [5] Forza Construction - Company website',
+      ''
     ];
-
-    const contextSpecific = {
-      projects: [
-        'Project Commands:',
-        '  ls           - List all projects',
-        '  view <id>    - View project details',
-        '  open <id>    - Open project link',
-        '  filter <tech> - Filter by technology',
-        ''
-      ],
-      gallery: [
-        'Gallery Commands:',
-        '  ls           - List all media',
-        '  view <id>    - View media item',
-        ''
-      ],
-      contact: [
-        'Contact Commands:',
-        '  info         - Show contact details',
-        '  send         - Compose message',
-        '  email        - Open email client',
-        '  github       - Open GitHub profile',
-        '  linkedin     - Open LinkedIn profile',
-        ''
-      ],
-      resume: [
-        'Resume Commands:',
-        '  ls           - List sections',
-        ''
-      ],
-      blog: [
-        'Blog Commands:',
-        '  ls           - List posts',
-        '  read <id>    - Read post',
-        '  search <term> - Search posts',
-        '  recent       - Recent posts',
-        ''
-      ]
-    };
-
-    return [...common, ...contextSpecific[context]];
   };
 
   const getProjectsCommands = (cmd: string, args: string[]): string[] => {
     switch (cmd) {
-      case 'ls':
-        return [
-          'Available projects:',
-          '[1] Boldly - Comfort zone expansion app',
-          '[2] Multilevel Factor - Quantitative research',
-          '[3] Simplify.ai - AI accessibility tool',
-          '[4] Black-Scholes - Financial modeling',
-          '[5] Personal Website - This portfolio',
-          ''
-        ];
-      case 'view':
-      case 'open':
-        if (args[0]) {
-          onCommand?.(`${cmd} ${args[0]}`);
-          return [`${cmd === 'view' ? 'Viewing' : 'Opening'} project ${args[0]}...`];
-        }
-        return ['Usage: ' + cmd + ' <project_id>'];
-      case 'filter':
-        if (args[0]) {
-          return [`Filtering projects by ${args[0]}...`];
-        }
-        return ['Usage: filter <technology>'];
-      default:
-        return [`Command not found: ${cmd}. Type 'help' for available commands.`];
-    }
-  };
-
-  const getGalleryCommands = (cmd: string, args: string[]): string[] => {
-    switch (cmd) {
-      case 'ls':
-        return [
-          'Gallery items:',
-          '[1] Professional photo',
-          '[2] Mom and I',
-          '[3] With Aria',
-          '[4] Iowa Governor',
-          '[5] Friend Jerry',
-          '[6] Drake 4x4 Relay (video)',
-          ''
-        ];
       case 'view':
         if (args[0]) {
-          onCommand?.(`view ${args[0]}`);
-          return [`Viewing item ${args[0]}...`];
+          const projectId = parseInt(args[0]);
+          if (projectId >= 1 && projectId <= 5) {
+            onCommand?.(`view ${args[0]}`);
+            return [`Viewing project ${args[0]} details...`];
+          } else {
+            return ['Error: Project ID must be between 1-5'];
+          }
         }
-        return ['Usage: view <item_id>'];
-      case 'slideshow':
-        onCommand?.('slideshow');
-        return ['Starting slideshow...'];
+        return ['Usage: view <project_id> (1-5)'];
       default:
         return [`Command not found: ${cmd}. Type 'help' for available commands.`];
     }
   };
 
-  const getContactCommands = (cmd: string): string[] => {
-    switch (cmd) {
-      case 'info':
-        return [
-          'Contact Information:',
-          'Email: thejackwang1216@gmail.com',
-          'GitHub: github.com/jackwang1216',
-          'LinkedIn: linkedin.com/in/jackwang1216',
-          'Location: Boston, MA'
-        ];
-      case 'send':
-        onCommand?.('send');
-        return ['Opening message composer...'];
-      case 'email':
-      case 'github': 
-      case 'linkedin':
-        return [`Opening ${cmd}...`];
-      default:
-        return [`Command not found: ${cmd}. Type 'help' for available commands.`];
-    }
-  };
-
-  const getResumeCommands = (cmd: string): string[] => {
-    switch (cmd) {
-      case 'ls':
-        return [
-          'Resume sections:',
-          '• education    - MIT academic background',
-          '• experience   - Work & internships',
-          '• skills       - Technical abilities',  
-          '• projects     - Key projects',
-          '• languages    - Spoken languages',
-          ''
-        ];
-      default:
-        return [`Command not found: ${cmd}. Type 'help' for available commands.`];
-    }
-  };
-
-  const getBlogCommands = (cmd: string): string[] => {
-    switch (cmd) {
-      case 'ls':
-        return ['No blog posts available yet...', ''];
-      default:
-        return [`Command not found: ${cmd}. Type 'help' for available commands.`];
-    }
-  };
 
   // Handle command submission
   const handleSubmit = (e: React.FormEvent) => {

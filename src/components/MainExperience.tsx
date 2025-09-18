@@ -4,13 +4,11 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import DomePortal from './DomePortal';
 import Terminal from './Terminal';
-import ProjectsPage from './ProjectsPage';
-import AboutPage from './AboutPage';
+import UnifiedScrollPage from './UnifiedScrollPage';
 import GalleryPage from './GalleryPage';
-import ContactPage from './ContactPage';
 
-export type ExperienceState = 'dome' | 'terminal' | 'room';
-export type RoomType = 'projects' | 'resume' | 'gallery' | 'contact' | 'blog';
+export type ExperienceState = 'dome' | 'terminal' | 'room' | 'unified';
+export type RoomType = 'gallery' | 'blog';
 
 interface MainExperienceProps {
   initialState?: ExperienceState;
@@ -19,6 +17,7 @@ interface MainExperienceProps {
 export default function MainExperience({ initialState = 'dome' }: MainExperienceProps) {
   const [currentState, setCurrentState] = useState<ExperienceState>(initialState);
   const [currentRoom, setCurrentRoom] = useState<RoomType | null>(null);
+  const [targetSection, setTargetSection] = useState<string>('about');
 
   // Handle navigation commands
   const handleNavigate = (destination: string) => {
@@ -34,24 +33,27 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
         setCurrentRoom(null);
         break;
       case 'projects':
-        setCurrentState('room');
-        setCurrentRoom('projects');
+        setTargetSection('projects');
+        setCurrentState('unified');
+        setCurrentRoom(null);
         break;
-      case 'resume':
+      case 'about':
       case 'cv':
-        setCurrentState('room');
-        setCurrentRoom('resume');
+        setTargetSection('about');
+        setCurrentState('unified');
+        setCurrentRoom(null);
+        break;
+      case 'contact':
+      case 'email':
+        setTargetSection('contact');
+        setCurrentState('unified');
+        setCurrentRoom(null);
         break;
       case 'gallery':
       case 'images':
       case 'photos':
         setCurrentState('room');
         setCurrentRoom('gallery');
-        break;
-      case 'contact':
-      case 'email':
-        setCurrentState('room');
-        setCurrentRoom('contact');
         break;
       case 'blog':
       case 'writing':
@@ -73,7 +75,7 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
 
 
   return (
-    <div className={`h-screen w-full relative ${currentState === 'room' ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+    <div className={`h-screen w-full relative ${currentState === 'room' || currentState === 'unified' ? 'overflow-y-auto' : 'overflow-hidden'}`}>
       <AnimatePresence mode="wait">
         {currentState === 'dome' && (
           <motion.div
@@ -84,7 +86,7 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
             transition={{ duration: 1, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <DomePortal onEnterCorridor={handleEnterTerminal} onGoToResume={() => handleNavigate('resume')} />
+            <DomePortal onEnterCorridor={handleEnterTerminal} onGoToResume={() => handleNavigate('about')} />
           </motion.div>
         )}
 
@@ -101,6 +103,19 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
           </motion.div>
         )}
 
+        {currentState === 'unified' && (
+          <motion.div
+            key="unified"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="w-full min-h-screen"
+          >
+            <UnifiedScrollPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} initialSection={targetSection} />
+          </motion.div>
+        )}
+
         {currentState === 'room' && currentRoom && (
           <motion.div
             key={`room-${currentRoom}`}
@@ -110,17 +125,8 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
             transition={{ duration: 0.8, ease: "easeInOut" }}
             className="w-full min-h-screen"
           >
-            {currentRoom === 'projects' && (
-              <ProjectsPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
-            )}
-            {currentRoom === 'resume' && (
-              <AboutPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
-            )}
             {currentRoom === 'gallery' && (
               <GalleryPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
-            )}
-            {currentRoom === 'contact' && (
-              <ContactPage onBack={() => setCurrentState('dome')} onNavigate={handleNavigate} />
             )}
             {currentRoom === 'blog' && (
               <div className="h-full w-full flex items-center justify-center bg-black">
@@ -143,7 +149,7 @@ export default function MainExperience({ initialState = 'dome' }: MainExperience
 
 
       {/* UI Controls: show path only in terminal and room states */}
-      {currentState !== 'dome' && (
+      {currentState !== 'dome' && currentState !== 'unified' && (
         <div className="absolute top-4 right-4 z-30">
           <div className="px-3 py-2 bg-black/60 backdrop-blur-sm border border-green-400/30 rounded-lg">
             <span className="text-xs text-green-400 font-mono">

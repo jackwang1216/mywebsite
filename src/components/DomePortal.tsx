@@ -98,10 +98,10 @@ export default function DomePortal({ onEnterCorridor, onGoToResume }: { onEnterC
             <div className="relative group">
               <button
                 onClick={onGoToResume}
-                aria-label="View resume"
+                aria-label="View about"
                 className="bg-transparent border border-purple-400/60 text-purple-400 px-6 py-3 text-sm font-mono hover:bg-purple-400/10 hover:border-purple-400 transition-all duration-300 rounded backdrop-blur-sm"
               >
-                VIEW_RESUME
+                VIEW_ABOUT
               </button>
               <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 border border-purple-400/60 text-purple-200 rounded px-2 py-1 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                 Click me for shortcut!
