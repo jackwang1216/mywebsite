@@ -13,7 +13,15 @@ const ses = new SESClient({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, message, to } = body;
+    const { name, email, message, to, subject } = body;
+
+    // Validate required fields
+    if (!name || !email || !message || !to) {
+      return NextResponse.json(
+        { error: "Missing required fields: name, email, message, and to are required" },
+        { status: 400 }
+      );
+    }
 
     const params = {
       Source: process.env.AWS_SES_FROM_EMAIL,
@@ -22,7 +30,7 @@ export async function POST(req: Request) {
       },
       Message: {
         Subject: {
-          Data: `New Contact Form Message from ${name}`,
+          Data: subject || `New Contact Form Message from ${name}`,
           Charset: "UTF-8",
         },
         Body: {

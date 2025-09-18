@@ -102,7 +102,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           'Available sections:',
           '',
           '  projects/            Interactive project portfolio',
-          '  resume/              Professional experience',
+          '  about/               Professional experience',
           '  gallery/             Personal photos & memories',
           '  contact/             Get in touch',
           '  blog/                Thoughts & writings',
@@ -113,7 +113,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
       case 'open':
         if (args[0]) {
           const destination = args[0];
-          const validSections = ['projects', 'resume', 'gallery', 'contact', 'blog'];
+          const validSections = ['projects', 'about', 'gallery', 'contact', 'blog'];
           if (validSections.includes(destination)) {
             setTimeout(() => onNavigate(destination), 500);
             return [`Opening ${destination}...`, 'Transitioning to interactive view...'];
@@ -121,7 +121,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
             return [`Section '${destination}' not found.`, 'Try: ls'];
           }
         }
-        return [`Usage: ${cmd} <section>`, 'Available sections: projects, resume, gallery, contact, blog'];
+        return [`Usage: ${cmd} <section>`, 'Available sections: projects, about, gallery, contact, blog'];
       
       case 'pwd':
         return ['/home/jackwang/mit'];
@@ -234,7 +234,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           '',
           'Available Sections:',
           '  • projects           - Interactive project portfolio',
-          '  • resume             - Professional experience & skills',
+          '  • about              - Professional experience & skills',
           '  • gallery            - Personal photos & videos',
           '  • contact            - Get in touch & social links',  
           '  • blog               - Thoughts & writings',
@@ -244,7 +244,7 @@ export default function Terminal({ onNavigate }: TerminalProps) {
           '  • Terminal commands work in all sections',
           '  • Type "clear" to clear screen',
           '',
-          'Navigation: cd projects | cd resume | cd gallery | cd contact',
+          'Navigation: cd projects | cd about | cd gallery | cd contact',
           ''
         ];
       

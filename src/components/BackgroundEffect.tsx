@@ -9,39 +9,39 @@ interface BackgroundEffectProps {
   connectionDistance?: number;
   particleSpeed?: number;
   interactive?: boolean;
-  theme?: 'projects' | 'gallery' | 'contact' | 'resume';
+  theme?: 'projects' | 'gallery' | 'contact' | 'about';
 }
 
-// Theme presets
+// Theme presets - Unified and calmer approach
 const themeConfigs = {
   projects: {
-    particleColor: { r: 14, g: 165, b: 233 }, // Blue
-    secondaryColor: { r: 6, g: 182, b: 212 }, // Cyan
-    particleCount: 220,
-    connectionDistance: 140,
-    particleSpeed: 0.4,
+    particleColor: { r: 100, g: 120, b: 150 }, // Muted blue
+    secondaryColor: { r: 80, g: 100, b: 130 }, // Darker muted blue
+    particleCount: 80,
+    connectionDistance: 100,
+    particleSpeed: 0.15,
     interactive: true
   },
   gallery: {
-    particleColor: { r: 236, g: 72, b: 153 }, // Pink
-    secondaryColor: { r: 147, g: 51, b: 234 }, // Purple
-    particleCount: 160,
-    connectionDistance: 120,
-    particleSpeed: 0.2,
+    particleColor: { r: 120, g: 100, b: 140 }, // Muted purple
+    secondaryColor: { r: 100, g: 80, b: 120 }, // Darker muted purple
+    particleCount: 80,
+    connectionDistance: 100,
+    particleSpeed: 0.15,
     interactive: false
   },
   contact: {
-    particleColor: { r: 34, g: 197, b: 94 }, // Green
-    secondaryColor: { r: 16, g: 185, b: 129 }, // Emerald
-    particleCount: 200,
-    connectionDistance: 160,
-    particleSpeed: 0.3,
+    particleColor: { r: 100, g: 140, b: 120 }, // Muted green
+    secondaryColor: { r: 80, g: 120, b: 100 }, // Darker muted green
+    particleCount: 80,
+    connectionDistance: 100,
+    particleSpeed: 0.15,
     interactive: true
   },
-  resume: {
-    particleColor: { r: 147, g: 51, b: 234 }, // Purple
-    secondaryColor: { r: 255, g: 215, b: 0 }, // Gold
-    particleCount: 140,
+  about: {
+    particleColor: { r: 130, g: 120, b: 100 }, // Muted gold/beige
+    secondaryColor: { r: 110, g: 100, b: 80 }, // Darker muted gold
+    particleCount: 80,
     connectionDistance: 100,
     particleSpeed: 0.15,
     interactive: false
@@ -98,18 +98,12 @@ export default function BackgroundEffect(props: BackgroundEffectProps) {
         this.size = Math.random() * 2.5 + 0.5;
         this.hue = Math.random() * 360;
         this.pulsePhase = Math.random() * Math.PI * 2;
-        if (theme === 'gallery') {
-          const r = Math.sin(this.hue * 0.01745) * 127 + 128;
-          const g = Math.sin((this.hue + 120) * 0.01745) * 127 + 128;
-          const b = Math.sin((this.hue + 240) * 0.01745) * 127 + 128;
-          this.color = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${Math.random() * 0.6 + 0.3})`;
-        } else {
-          const mixFactor = Math.random();
-          const r = Math.floor(config.particleColor.r * (1 - mixFactor) + config.secondaryColor.r * mixFactor);
-          const g = Math.floor(config.particleColor.g * (1 - mixFactor) + config.secondaryColor.g * mixFactor);
-          const b = Math.floor(config.particleColor.b * (1 - mixFactor) + config.secondaryColor.b * mixFactor);
-          this.color = `rgba(${r}, ${g}, ${b}, ${Math.random() * 0.7 + 0.2})`;
-        }
+        // Unified color approach for all themes
+        const mixFactor = Math.random();
+        const r = Math.floor(config.particleColor.r * (1 - mixFactor) + config.secondaryColor.r * mixFactor);
+        const g = Math.floor(config.particleColor.g * (1 - mixFactor) + config.secondaryColor.g * mixFactor);
+        const b = Math.floor(config.particleColor.b * (1 - mixFactor) + config.secondaryColor.b * mixFactor);
+        this.color = `rgba(${r}, ${g}, ${b}, ${Math.random() * 0.4 + 0.2})`;
       }
 
       update(width: number, height: number) {
@@ -125,16 +119,6 @@ export default function BackgroundEffect(props: BackgroundEffectProps) {
         }
         this.x += this.vx;
         this.y += this.vy;
-        if (theme === 'gallery') {
-          this.pulsePhase += 0.02;
-          this.hue += 0.5;
-          if (this.hue > 360) this.hue = 0;
-          const r = Math.sin(this.hue * 0.01745) * 127 + 128;
-          const g = Math.sin((this.hue + 120) * 0.01745) * 127 + 128;
-          const b = Math.sin((this.hue + 240) * 0.01745) * 127 + 128;
-          const alpha = Math.sin(this.pulsePhase) * 0.3 + 0.5;
-          this.color = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${alpha})`;
-        }
         if (config.interactive) {
           this.vx *= 0.99;
           this.vy *= 0.99;
@@ -147,26 +131,9 @@ export default function BackgroundEffect(props: BackgroundEffectProps) {
 
       draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
-        if (theme === 'gallery') {
-          const glowSize = Math.max(0.1, this.size + Math.sin(this.pulsePhase) * 1);
-          ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
-          ctx.fillStyle = this.color;
-          ctx.fill();
-          ctx.shadowColor = this.color;
-          ctx.shadowBlur = 10;
-          ctx.arc(this.x, this.y, Math.max(0.1, this.size * 0.5), 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        } else if (theme === 'projects') {
-          const pulse = Math.sin(Date.now() * 0.003 + this.x * 0.01) * 0.5 + 1;
-          ctx.arc(this.x, this.y, Math.max(0.1, this.size * pulse), 0, Math.PI * 2);
-          ctx.fillStyle = this.color;
-          ctx.fill();
-        } else {
-          ctx.arc(this.x, this.y, Math.max(0.1, this.size), 0, Math.PI * 2);
-          ctx.fillStyle = this.color;
-          ctx.fill();
-        }
+        ctx.arc(this.x, this.y, Math.max(0.1, this.size), 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
       }
     }
 
@@ -257,7 +224,7 @@ export default function BackgroundEffect(props: BackgroundEffectProps) {
       );
       
       const { r, g, b } = config.particleColor;
-      gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.1)`);
+      gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.03)`);
       gradient.addColorStop(1, 'rgba(17, 17, 17, 0)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -280,11 +247,11 @@ export default function BackgroundEffect(props: BackgroundEffectProps) {
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
             
-            const opacity = (1 - distance / finalConnectionDistance) * (theme === 'contact' ? 0.5 : 0.3);
+            const opacity = (1 - distance / finalConnectionDistance) * 0.15;
             const { r, g, b } = config.particleColor;
-            
+
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-            ctx.lineWidth = theme === 'contact' ? 0.8 : 0.4;
+            ctx.lineWidth = 0.3;
             ctx.stroke();
           }
         }
