@@ -12,7 +12,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Jack Wang",
-  description: "Software Engineer & Developer & Researcher & Athlete",
+  description: "i love learning lul",
   applicationName: "Jack Wang",
   icons: {
     icon: '/favicon.ico',
